@@ -576,6 +576,20 @@
         const CARD_DISPLAY_MS = 5000;
         const TRANSITION_MS = 800;
         let cardTimeoutId;
+        const videoSources = [
+          '../assets/video/pelliscope_top_preview.mp4',
+          '../assets/video/pelliscope-mobile-ad1.mp4',
+        ];
+        let currentVideoIndex = Math.floor(Math.random() * videoSources.length);
+
+        const setVideoSource = () => {
+          const src = videoSources[currentVideoIndex % videoSources.length];
+          if (video.getAttribute('src') !== src) {
+            video.setAttribute('src', src);
+            video.load();
+          }
+          currentVideoIndex = (currentVideoIndex + 1) % videoSources.length;
+        };
 
         const showCard = () => {
           videoWrap.classList.add('opacity-0');
@@ -598,6 +612,7 @@
           setTimeout(() => {
             card.classList.add('hidden');
             videoWrap.classList.remove('hidden');
+            setVideoSource();
             requestAnimationFrame(() => videoWrap.classList.remove('opacity-0'));
             video.play().catch(() => {});
           }, TRANSITION_MS);
