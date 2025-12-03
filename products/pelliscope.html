@@ -107,14 +107,14 @@
                         </ul>
                         <div class="mt-8 space-y-4">
                             <div class="flex flex-col sm:flex-row gap-4">
-                                <a href="../assets/video/pelliscope_preview.mp4" class="inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-semibold shadow-md transition">
+                                <button type="button" data-demo="pc" class="inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-semibold shadow-md transition">
                                     <i class="fas fa-desktop text-lg"></i>
                                     Watch PC Demo
-                                </a>
-                                <a href="../assets/video/pelliscope-mobile-ad1.mp4" class="inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-semibold shadow-md transition">
+                                </button>
+                                <button type="button" data-demo="mobile" class="inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-semibold shadow-md transition">
                                     <i class="fas fa-mobile-screen-button text-lg"></i>
                                     Watch Mobile Demo
-                                </a>
+                                </button>
                             </div>
                             <div class="flex flex-col sm:flex-row gap-4">
                                 <a href="../investors/pelliscope-investror-deck.html" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 border-2 border-emerald-200 text-emerald-700 hover:bg-emerald-50 px-6 py-3 rounded-lg font-semibold transition">
@@ -465,6 +465,19 @@
       </div>
     </footer>
 
+    <!-- Demo Modal -->
+    <div id="demoOverlay" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center px-4">
+      <div class="relative bg-black rounded-2xl shadow-2xl w-full max-w-5xl aspect-video overflow-hidden">
+        <button id="closeDemo" class="absolute top-3 right-3 bg-white/80 text-gray-800 hover:bg-white rounded-full p-2 shadow-md">
+          <i class="fas fa-times text-lg"></i>
+        </button>
+        <video id="demoPlayer" class="w-full h-full object-cover" controls playsinline>
+          <source src="../assets/video/pelliscope_preview.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
     <!-- Contact QR Modal -->
     <div id="contactQrModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
       <div class="bg-white rounded-2xl shadow-2xl p-6 max-w-md w-full relative">
@@ -524,6 +537,50 @@
         video.addEventListener('ended', showCard);
 
         setTimeout(showVideo, 2000);
+      })();
+    </script>
+    <script>
+      (function () {
+        const overlay = document.getElementById('demoOverlay');
+        const player = document.getElementById('demoPlayer');
+        const closeBtn = document.getElementById('closeDemo');
+        const demoButtons = document.querySelectorAll('[data-demo]');
+        const sources = {
+          pc: '../assets/video/pelliscope_preview.mp4',
+          mobile: '../assets/video/pelliscope-mobile-ad1.mp4',
+        };
+
+        if (!overlay || !player || demoButtons.length === 0) return;
+
+        const openModal = (mode) => {
+          const src = sources[mode] || sources.pc;
+          if (player.src !== src) {
+            player.src = src;
+            player.load();
+          }
+          overlay.classList.remove('hidden');
+          requestAnimationFrame(() => player.play().catch(() => {}));
+        };
+
+        const closeModal = () => {
+          overlay.classList.add('hidden');
+          player.pause();
+          player.currentTime = 0;
+        };
+
+        demoButtons.forEach((btn) => {
+          btn.addEventListener('click', () => openModal(btn.dataset.demo));
+        });
+
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        overlay.addEventListener('click', (e) => {
+          if (e.target === overlay) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && !overlay.classList.contains('hidden')) {
+            closeModal();
+          }
+        });
       })();
     </script>
     <script>
