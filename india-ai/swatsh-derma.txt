@@ -1,0 +1,43 @@
+Chapter Title  (≤ 50 words)
+
+स्वस्थ‑Derma: Mobile AI for Pre‑Medical Dermatology Inquiry and Infectious‑vs‑Non‑Infectious Triage
+
+⸻
+
+Chapter Theme / Focus Area  (≤ 50 words)
+
+Community triage and public‑health guidance for skin conditions using a privacy‑preserving, case‑level, multi‑image AI—tailored to primary care and telehealth contexts across the Global South.
+
+⸻
+
+Summary of Use Case  (≤ 50 words)
+
+स्वस्थ‑Derma helps people decide when to seek care and how to limit spread. From 1–3 photos per case, it classifies Infectious vs Non‑infectious presentations, nudges clinic visits when risk is high, and shows hygiene prompts. Tested on 468 cases (1,019 images) with 80.2% case‑level accuracy.
+
+⸻
+
+Abstract  (≤ 250 words)
+
+Skin conditions are common, yet specialty access is uneven; many people first seek informal advice, delaying care and missing simple steps that reduce contagion. स्वस्थ‑Derma is a mobile, pre‑medical dermatology assistant that analyzes 1–3 photos per encounter and returns a case‑level assessment: Infectious vs Non‑infectious. It is not a diagnosis; rather, it provides (i) a clear care‑seeking suggestion (“consider a clinic visit”) when risk is high and (ii) short, evidence‑aligned hygiene prompts (e.g., keep rashes covered, avoid close skin contact, don’t share towels/linens) when the presentation is likely infectious.
+
+To ground the binary task in common primary‑care realities, training labels map frequent differentials to two groups. Non‑infectious: eczema, allergic contact dermatitis, urticaria, insect bite, psoriasis, drug‑induced rash. Infectious: folliculitis, impetigo, tinea (ringworm), herpes zoster. On a held‑out test set of 468 cases (1,019 images) curated from a real‑world, multi‑image dataset, the system achieved 80.2% case‑level accuracy for Infectious‑vs‑Non‑infectious triage. Outputs are probability‑calibrated to support practical thresholds in different settings, and the app is designed for privacy (minimal data collection, on‑device or secure processing) and safety (disclaimers, “not for emergencies,” routing to human care).
+
+By reframing dermatology AI as pre‑medical inquiry—with binary triage, calibrated risk, and public‑health advice—स्वस्थ‑Derma offers a pragmatic, culturally adaptable front door to care: encourage earlier visits when risk is high, reduce unnecessary visits when risk is low, and promote simple actions that may limit spread while care is arranged.
+
+⸻
+
+(Optional) One‑line tagline
+
+स्वस्थ‑Derma: pre‑medical triage for skin concerns—binary risk, clear next steps, and simple actions to protect families and communities.
+
+⸻
+
+Notes for your cover letter / background (do not paste into form)
+	•	Burden context. Skin conditions are a leading cause of non‑fatal disease burden globally, underscoring the need for accessible triage tools.  ￼
+	•	Multi‑image reality. Recent dermatology datasets collect multiple photos per case, reflecting real encounters; SCIN is a representative example.  ￼
+	•	Hygiene guidance examples (used to craft prompts in the app):
+– Shingles (herpes zoster): keep the rash covered; avoid contact with people at high risk until lesions crust.
+– Ringworm (tinea): contagious by skin contact; avoid sharing clothing/towels; cover lesions.
+– Impetigo: practice good hygiene; avoid sharing personal items; cover sores.
+
+IP/Patent safety: I intentionally avoided algorithmic specifics (e.g., the exact learning formulation). The text speaks only to case‑level, multi‑image inference and calibrated outputs—sufficient for readers and reviewers without disclosing patent‑sensitive methods.
