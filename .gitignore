@@ -5,3 +5,7 @@ fdroid/keystore.p12
 fdroid/tmp/
 fdroid/srclibs/
 fdroid/config.yml
+# APKs are hosted on GitHub Releases; keep them out of this repo.
+# GitHub blocks files >100MB if they appear in history.
+downloads/aura/*.apk
+fdroid/repo/*.apk
