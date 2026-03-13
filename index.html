@@ -85,6 +85,10 @@
       box-shadow: 0 20px 25px -5px rgba(14, 165, 233, 0.1), 0 10px 10px -5px rgba(14, 165, 233, 0.04);
     }
 
+    .product-card-clickable {
+      cursor: pointer;
+    }
+
     .research-card {
       transition: all 0.3s ease;
       background: rgba(255, 255, 255, 0.05);
@@ -396,7 +400,7 @@
 
         <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           <!-- AURA -->
-          <div class="product-card rounded-xl overflow-hidden border border-dark-100">
+          <div class="product-card product-card-clickable rounded-xl overflow-hidden border border-dark-100" data-card-link="products/aura2.html" role="link" tabindex="0" aria-label="Open AURA product page">
             <div class="h-48 bg-gradient-to-br from-sky-600 to-indigo-700 flex items-center justify-center">
               <i class="fas fa-robot text-white text-6xl floating"></i>
             </div>
@@ -410,9 +414,6 @@
                 support.
               </p>
               <div class="flex flex-col gap-2 text-sm font-medium">
-                <a href="products/aura2.html" class="btn-outline inline-flex items-center justify-center rounded-lg text-primary-600 px-4 py-2">
-                  View Product Page
-                </a>
                 <a href="https://www.hawkfranklin.in/downloads/aura/AURA.apk" class="btn-primary inline-flex items-center justify-center rounded-lg text-white px-4 py-2">
                   Download APK
                 </a>
@@ -425,6 +426,10 @@
                 <a href="https://www.hawkfranklin.in/fdroid/repo/" class="text-primary-600 text-center hover:underline">
                   F-Droid Repo URL
                 </a>
+              </div>
+              <div class="mt-4 flex items-center text-primary-600 font-medium">
+                <span>Learn more</span>
+                <i class="fas fa-arrow-right ml-2 text-sm"></i>
               </div>
             </div>
           </div>
@@ -807,6 +812,25 @@
       if (link.getAttribute('href') === window.location.pathname) {
         link.classList.add('nav-active');
       }
+    });
+
+    document.querySelectorAll('[data-card-link]').forEach((card) => {
+      const navigate = () => {
+        const href = card.getAttribute('data-card-link');
+        if (href) window.location.href = href;
+      };
+
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('a, button')) return;
+        navigate();
+      });
+
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          navigate();
+        }
+      });
     });
 
     // WHX showcase single-image fade carousel
