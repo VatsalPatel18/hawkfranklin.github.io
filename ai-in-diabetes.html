@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Doctor's View on AI & Diabetes</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Inter for that clean Apple look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        apple: {
+                            dark: '#000000',
+                            gray: '#1d1d1f',
+                            lightGray: '#f5f5f7',
+                            blue: '#2997ff',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #000000;
+            color: #f5f5f7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Hide scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        /* Glassmorphism effects */
+        .glass {
+            background: rgba(29, 29, 31, 0.7);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-card {
+            background: linear-gradient(145deg, rgba(40, 40, 42, 1) 0%, rgba(20, 20, 22, 1) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Scroll Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Glow effects */
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Interactive tags */
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .skill-tag:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Data table styles */
+        .custom-table th {
+            background: rgba(41, 151, 255, 0.1);
+            color: #2997ff;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .custom-table tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background 0.2s;
+        }
+        
+        .custom-table tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .custom-table td {
+            font-size: 0.875rem;
+            color: #d1d5db;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+    </style>
+</head>
+
+<body class="selection:bg-apple-blue selection:text-white relative">
+
+    <!-- Ambient Background Glows -->
+    <div class="glow-orb w-[500px] h-[500px] bg-blue-900 top-[-100px] left-[-100px]"></div>
+    <div class="glow-orb w-[400px] h-[400px] bg-purple-900 bottom-[-100px] right-[-100px]"></div>
+
+    <div class="max-w-[1600px] mx-auto min-h-screen flex flex-col lg:flex-row relative">
+
+        <!-- ========================================== -->
+        <!-- LEFT PANEL: STATIC / STICKY INFO           -->
+        <!-- ========================================== -->
+        <aside class="w-full lg:w-[40%] xl:w-[30%] lg:h-screen lg:sticky top-0 p-6 md:p-12 flex flex-col justify-between z-10">
+
+            <div class="glass p-8 rounded-3xl h-full flex flex-col justify-between relative overflow-hidden">
+                <!-- Inner ambient glow -->
+                <div class="absolute top-0 right-0 w-32 h-32 bg-apple-blue rounded-full blur-[80px] opacity-20"></div>
+
+                <div class="overflow-y-auto pb-4 h-[calc(100vh-140px)] no-scrollbar">
+                    <div class="flex justify-center gap-8 items-start mb-8">
+                        <div class="flex flex-col items-center">
+                            <div class="w-24 h-24 rounded-2xl bg-gray-800 flex items-center justify-center overflow-hidden border border-white/10 shadow-xl relative inline-block mb-3">
+                                <img src="Abhijeet Patel.jpg" alt="Dr. Abhijeet Patel" class="absolute inset-0 w-full h-full object-cover scale-[1.3] origin-[50%_20%]" onerror="this.src='https://ui-avatars.com/api/?name=Abhijeet+Patel&background=2997ff&color=fff'">
+                            </div>
+                            <span class="text-white font-bold text-sm">Dr. Abhijeet</span>
+                            <span class="text-blue-400 font-medium text-[10px] tracking-widest">(M.B.B.S)</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-24 h-24 rounded-2xl bg-gray-800 flex items-center justify-center overflow-hidden border border-white/10 shadow-xl relative inline-block mb-3">
+                                <img src="Vatsal_Patel.jpg" alt="Vatsal Patel" class="absolute inset-0 w-full h-full object-cover scale-[1.4] origin-[50%_20%]" onerror="this.src='https://ui-avatars.com/api/?name=Vatsal+Patel&background=2997ff&color=fff'">
+                            </div>
+                            <span class="text-white font-bold text-sm">Vatsal Patel</span>
+                            <span class="text-blue-400 font-medium text-[10px] tracking-widest text-center max-w-[100px] leading-tight">(M.Sc. AI)</span>
+                        </div>
+                    </div>
+
+                    <h1 class="text-3xl font-bold tracking-tight mb-4 text-center">A Doctor's View on AI & Diabetes</h1>
+
+                    <p class="text-gray-300 leading-relaxed mb-6 font-light text-sm">
+                        Artificial Intelligence in Diabetes: A Comprehensive Research Review (2021-2025). 
+                        Bridging the gap between empirical endocrinology and advanced computational modeling.
+                    </p>
+
+                    <div class="flex flex-wrap gap-2 mb-8">
+                        <span class="skill-tag">Computational Biology</span>
+                        <span class="skill-tag">Endocrinology</span>
+                        <span class="skill-tag">Machine Learning</span>
+                    </div>
+
+                    <div class="space-y-3">
+                        <a href="#intro" class="flex items-center gap-4 text-gray-300 hover:text-white transition-colors group">
+                            <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-all">
+                                <span class="text-xs font-bold">1</span>
+                            </div>
+                            <span class="font-medium text-sm">Introduction</span>
+                        </a>
+                        <a href="#data-landscape" class="flex items-center gap-4 text-gray-300 hover:text-white transition-colors group">
+                            <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-purple-500 group-hover:text-white transition-all">
+                                <span class="text-xs font-bold">2</span>
+                            </div>
+                            <span class="font-medium text-sm">Data Landscape</span>
+                        </a>
+                        <a href="#datasets" class="flex items-center gap-4 text-gray-300 hover:text-white transition-colors group">
+                            <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-all">
+                                <span class="text-xs font-bold">3</span>
+                            </div>
+                            <span class="font-medium text-sm">Dataset Sizes</span>
+                        </a>
+                        <a href="#models" class="flex items-center gap-4 text-gray-300 hover:text-white transition-colors group">
+                            <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-orange-500 group-hover:text-white transition-all">
+                                <span class="text-xs font-bold">4</span>
+                            </div>
+                            <span class="font-medium text-sm">ML/DL Models</span>
+                        </a>
+                        <a href="#performance" class="flex items-center gap-4 text-gray-300 hover:text-white transition-colors group">
+                            <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-red-500 group-hover:text-white transition-all">
+                                <span class="text-xs font-bold">5</span>
+                            </div>
+                            <span class="font-medium text-sm">Key Findings & Metrics</span>
+                        </a>
+                        <a href="#challenges" class="flex items-center gap-4 text-gray-300 hover:text-white transition-colors group">
+                            <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-gray-500 group-hover:text-white transition-all">
+                                <span class="text-xs font-bold">6</span>
+                            </div>
+                            <span class="font-medium text-sm">Challenges & Limitations</span>
+                        </a>
+                        <a href="#future" class="flex items-center gap-4 text-gray-300 hover:text-white transition-colors group">
+                            <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-cyan-500 group-hover:text-white transition-all">
+                                <span class="text-xs font-bold">7</span>
+                            </div>
+                            <span class="font-medium text-sm">Future Directions</span>
+                        </a>
+                        <a href="#conclusion" class="flex items-center gap-4 text-gray-300 hover:text-white transition-colors group">
+                            <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-pink-500 group-hover:text-white transition-all">
+                                <span class="text-xs font-bold">8</span>
+                            </div>
+                            <span class="font-medium text-sm">Conclusion</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="pt-6 mt-4 border-t border-white/10 flex gap-4">
+                    <a href="index.html" class="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
+                        <i class="fa-solid fa-arrow-left"></i> Home
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ========================================== -->
+        <!-- RIGHT PANEL: DYNAMIC SCROLLING CONTENT     -->
+        <!-- ========================================== -->
+        <main class="w-full lg:w-[60%] xl:w-[70%] p-6 md:p-12 pb-32 space-y-24">
+
+            <!-- Intro Section -->
+            <section id="intro" class="space-y-8 mt-12 lg:mt-0">
+                <div class="reveal">
+                    <h3 class="text-sm font-bold tracking-widest text-blue-500 uppercase mb-2">1. Overview</h3>
+                    <h2 class="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-300">The Increasing Significance of AI in Addressing the Global Diabetes Epidemic</h2>
+                </div>
+
+                <div class="glass-card rounded-[2rem] p-8 reveal">
+                    <p class="text-gray-300 leading-relaxed font-light mb-6 text-lg">
+                        Diabetes mellitus represents a burgeoning global health crisis, manifesting in substantial morbidity, mortality, and escalating healthcare expenditures. Projections indicate a dramatic surge in its prevalence in the coming decades, underscoring the critical need for more effective strategies in both the management and prevention of this chronic condition.
+                    </p>
+                    <p class="text-gray-300 leading-relaxed font-light mb-6">
+                        Traditional management approaches, which often rely on metrics such as fasting blood glucose and glycated hemoglobin (HbA1c), present inherent limitations in their capacity to capture the complete spectrum of glycemic control. This creates a significant opportunity for the application of artificial intelligence (AI) to leverage more granular and continuous data, potentially yielding more profound insights into the disease's dynamics.
+                    </p>
+                    <div class="bg-blue-900/20 border-l-4 border-blue-500 p-6 rounded-r-xl">
+                        <p class="text-blue-100 font-medium italic">
+                            Artificial intelligence (AI), encompassing machine learning (ML) and deep learning (DL) methodologies, is increasingly being explored for its transformative potential in revolutionizing diabetes care. The sheer volume of recent research underscores the significant interest and perceived potential of these technologies.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Landscape Section -->
+            <section id="data-landscape" class="space-y-8">
+                <div class="reveal">
+                    <h3 class="text-sm font-bold tracking-widest text-purple-500 uppercase mb-2">2. Foundations</h3>
+                    <h2 class="text-3xl font-bold text-white">Data Landscape in AI-Driven Research</h2>
+                    <p class="text-gray-400 mt-2">The application of AI in diabetes research necessitates the utilization of a diverse array of data types, reflecting the multifaceted nature of the disease.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal">
+                    <!-- Clinical -->
+                    <div class="glass-card p-6 rounded-[1.5rem] hover:border-purple-500/50 transition-colors">
+                        <div class="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 text-xl mb-4"><i class="fa-solid fa-notes-medical"></i></div>
+                        <h4 class="font-bold text-lg mb-2 text-white">Clinical Data</h4>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed">Age, gender, BMI, medical history, HbA1c, fasting blood glucose, and lipids. This data often forms the bedrock upon which many AI models are built, readily available within EHRs.</p>
+                    </div>
+                    <!-- Imaging -->
+                    <div class="glass-card p-6 rounded-[1.5rem] hover:border-blue-500/50 transition-colors">
+                        <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 text-xl mb-4"><i class="fa-solid fa-eye"></i></div>
+                        <h4 class="font-bold text-lg mb-2 text-white">Imaging Data</h4>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed">Retinal fundus images and OCT scans for diabetic retinopathy, MRIs, and foot photographic images. Crucial for CNN deep learning applications.</p>
+                    </div>
+                    <!-- Physiological -->
+                    <div class="glass-card p-6 rounded-[1.5rem] hover:border-emerald-500/50 transition-colors">
+                        <div class="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-xl mb-4"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <h4 class="font-bold text-lg mb-2 text-white">Physiological Data</h4>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed">Continuous glucose monitoring (CGM) systems, ECGs, and wearables. This high-frequency time-series data is essential for accurate prediction of glycemic events.</p>
+                    </div>
+                    <!-- Genetic -->
+                    <div class="glass-card p-6 rounded-[1.5rem] hover:border-orange-500/50 transition-colors">
+                        <div class="w-12 h-12 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-400 text-xl mb-4"><i class="fa-solid fa-dna"></i></div>
+                        <h4 class="font-bold text-lg mb-2 text-white">Genetic Data</h4>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed">SNPs and gene expression profiles provide crucial information about disease predisposition, often requiring sophisticated bioinformatics pipelines.</p>
+                    </div>
+                    <!-- Omics -->
+                    <div class="glass-card p-6 rounded-[1.5rem] hover:border-pink-500/50 transition-colors">
+                        <div class="w-12 h-12 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-400 text-xl mb-4"><i class="fa-solid fa-microscope"></i></div>
+                        <h4 class="font-bold text-lg mb-2 text-white">Metabolomic & Proteomic</h4>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed">Identifying novel biomarkers via metabolite, protein, and RNA levels. These high-dimensional datasets require advanced AI for discerning subtle correlations.</p>
+                    </div>
+                    <!-- Lifestyle -->
+                    <div class="glass-card p-6 rounded-[1.5rem] hover:border-cyan-500/50 transition-colors">
+                        <div class="w-12 h-12 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400 text-xl mb-4"><i class="fa-solid fa-person-running"></i></div>
+                        <h4 class="font-bold text-lg mb-2 text-white">Lifestyle & Behavioral</h4>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed">Diet, physical activity, sleep, and medication adherence inputs. Essential for developing personalized interventions and achieving behavior change.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dataset Sizes -->
+            <section id="datasets" class="space-y-8">
+                <div class="reveal">
+                    <h3 class="text-sm font-bold tracking-widest text-emerald-500 uppercase mb-2">3. Scale & Open Data</h3>
+                    <h2 class="text-3xl font-bold">Variability in Dataset Sizes</h2>
+                </div>
+
+                <div class="glass-card rounded-[2rem] p-8 reveal border-l-4 border-emerald-500">
+                    <p class="text-gray-300 font-light leading-relaxed mb-4">
+                        The size of datasets employed exhibits considerable variability. Studies leveraging clinical data often involve cohorts ranging from a few hundred to tens of thousands of individuals (e.g., Electronic health records analyzing 89,191 prediabetic individuals or 10,000 patients for diabetic complications).
+                    </p>
+                    <p class="text-gray-300 font-light leading-relaxed mb-4">
+                        Deep learning models for image analysis often necessitate very large datasets to achieve high levels of accuracy. The availability of publicly accessible imaging datasets, such as Kaggle competitions, accelerates progress. Similarly, the <strong>Pima Indian Diabetes dataset</strong> stands out as a frequently utilized benchmark.
+                    </p>
+                    <p class="text-gray-300 font-light leading-relaxed">
+                        Recognizing data silos and privacy concerns, ongoing efforts prioritize <strong>Federated Learning platforms</strong> to enable model training across decentralized sources without accessing raw, sensitive patient information.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Models -->
+            <section id="models" class="space-y-8">
+                <div class="reveal">
+                    <h3 class="text-sm font-bold tracking-widest text-orange-500 uppercase mb-2">4. Architectures</h3>
+                    <h2 class="text-3xl font-bold">Applied ML & DL Models</h2>
+                </div>
+
+                <div class="space-y-6 reveal">
+                    <div class="glass p-6 rounded-2xl flex flex-col md:flex-row gap-6 items-start md:items-center group hover:bg-white/5 transition-all">
+                        <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-orange-400 to-orange-600 flex-shrink-0 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-layer-group text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold text-white mb-2">Ensemble Methods</h4>
+                            <p class="text-gray-400 text-sm font-light">Random Forests and Gradient Boosting Machines (XGBoost, LightGBM) have frequently demonstrated superior performance for risk prediction on clinical data due to handling high-dimensional inputs and assessing feature importance.</p>
+                        </div>
+                    </div>
+
+                    <div class="glass p-6 rounded-2xl flex flex-col md:flex-row gap-6 items-start md:items-center group hover:bg-white/5 transition-all">
+                        <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex-shrink-0 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-image text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold text-white mb-2">Convolutional Neural Networks (CNNs)</h4>
+                            <p class="text-gray-400 text-sm font-light">The dominant architectural choice for image analysis (Diabetic Retinopathy). Transfer learning is heavily utilized to adapt pre-trained models safely against smaller medical subsets.</p>
+                        </div>
+                    </div>
+
+                    <div class="glass p-6 rounded-2xl flex flex-col md:flex-row gap-6 items-start md:items-center group hover:bg-white/5 transition-all">
+                        <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex-shrink-0 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-clock-rotate-left text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold text-white mb-2">RNNs & Transformers</h4>
+                            <p class="text-gray-400 text-sm font-light">LSTMs, GRUs, and Transformers process sequential time-series data from Continuous Glucose Monitors (CGM), learning to predict future blood glucose levels and alert on adverse glycemic events.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+<!-- Python script will continue adding table elements -->
+
+            <!-- Performance Section & Table -->
+            <section id="performance" class="space-y-8">
+                <div class="reveal">
+                    <h3 class="text-sm font-bold tracking-widest text-red-500 uppercase mb-2">5. Literature Review</h3>
+                    <h2 class="text-3xl font-bold">Key Findings & Metrics from High-Impact Papers</h2>
+                    <p class="text-gray-400 mt-2 font-light">A snapshot of the active research landscape demonstrating predictive accuracy, specific cohorts, and chosen metrics.</p>
+                </div>
+
+                <div class="glass-card rounded-2xl overflow-hidden reveal">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left custom-table min-w-[1000px]">
+                            <thead>
+                                <tr>
+                                    <th class="p-4 rounded-tl-xl whitespace-nowrap">Study</th>
+                                    <th class="p-4">Application Focus</th>
+                                    <th class="p-4">Data Paradigm</th>
+                                    <th class="p-4">Cohort Size</th>
+                                    <th class="p-4 whitespace-nowrap">Open (Data/Code)</th>
+                                    <th class="p-4">Models</th>
+                                    <th class="p-4 rounded-tr-xl">Performance Context</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="p-4 font-semibold text-white whitespace-nowrap">Liu et al. (2025)</td>
+                                    <td class="p-4">Type 2 Diabetes Prediction</td>
+                                    <td class="p-4">Clinical data (HbA1c, fasting glucose, weight, lipids)</td>
+                                    <td class="p-4 whitespace-nowrap">6687 adults (longitudinal)</td>
+                                    <td class="p-4 text-center">
+                                        <span class="px-2 py-1 bg-white/10 rounded-md text-xs">No / No</span>
+                                    </td>
+                                    <td class="p-4">Random Forest, Logistic Regression, XGBoost</td>
+                                    <td class="p-4 text-emerald-400">Accuracy: RF 99%, LR 99%, XGBoost 98%</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 font-semibold text-white whitespace-nowrap">Alhalafi et al. (2024)</td>
+                                    <td class="p-4">Diabetes Mgmt Effectiveness</td>
+                                    <td class="p-4">Clinical data (symptoms, indicators)</td>
+                                    <td class="p-4 whitespace-nowrap">8 RCTs</td>
+                                    <td class="p-4 text-center">
+                                        <span class="px-2 py-1 bg-white/10 rounded-md text-xs">No / No</span>
+                                    </td>
+                                    <td class="p-4">Various AI models</td>
+                                    <td class="p-4 text-emerald-400">Symptom Detect Risk Ratio 0.97 favoring AI</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 font-semibold text-white whitespace-nowrap">Makroum et al. (2022)</td>
+                                    <td class="p-4">Blood Glucose Prediction</td>
+                                    <td class="p-4">CGM data, wearables</td>
+                                    <td class="p-4 whitespace-nowrap">19 studies</td>
+                                    <td class="p-4 text-center">
+                                        <span class="px-2 py-1 bg-white/10 rounded-md text-xs">No / No</span>
+                                    </td>
+                                    <td class="p-4">SVM, Decision Trees, AdaBoost</td>
+                                    <td class="p-4 text-emerald-400">Accurate glucose forecasting on smart devices</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 font-semibold text-white whitespace-nowrap">Campanella et al. (2024)</td>
+                                    <td class="p-4">Personalized Therapy</td>
+                                    <td class="p-4">Clinical records, lifestyle</td>
+                                    <td class="p-4 whitespace-nowrap">77 studies</td>
+                                    <td class="p-4 text-center">
+                                        <span class="px-2 py-1 bg-white/10 rounded-md text-xs">No / No</span>
+                                    </td>
+                                    <td class="p-4">Reinforcement Learning, DL</td>
+                                    <td class="p-4 text-emerald-400">Optimized therapeutic algorithms</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 font-semibold text-white whitespace-nowrap">Huang et al. (2023)</td>
+                                    <td class="p-4">Complication Prediction</td>
+                                    <td class="p-4">Clinical, retinal images, foot images</td>
+                                    <td class="p-4 whitespace-nowrap">Varies</td>
+                                    <td class="p-4 text-center">
+                                        <span class="px-2 py-1 bg-white/10 rounded-md text-xs">Yes / No</span>
+                                    </td>
+                                    <td class="p-4">ML models</td>
+                                    <td class="p-4 text-emerald-400">Improved diagnosis of GDM, DR, and DN</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 font-semibold text-white whitespace-nowrap">Gowthami et al. (2024)</td>
+                                    <td class="p-4">Early Detection T2DM</td>
+                                    <td class="p-4">Clinical data</td>
+                                    <td class="p-4 whitespace-nowrap">Unspecified</td>
+                                    <td class="p-4 text-center">
+                                        <span class="px-2 py-1 bg-white/10 rounded-md text-xs">No / No</span>
+                                    </td>
+                                    <td class="p-4">Classification ML</td>
+                                    <td class="p-4 text-emerald-400">High Accuracy / F1 Score reported</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 font-semibold text-white whitespace-nowrap">Alghamdi et al. (2024)</td>
+                                    <td class="p-4">Diabetes Risk & Explainability</td>
+                                    <td class="p-4">Pima, Scikit-learn, Rural Datasets</td>
+                                    <td class="p-4 whitespace-nowrap">768, 442, 148</td>
+                                    <td class="p-4 text-center">
+                                        <span class="px-2 py-1 bg-white/10 rounded-md text-xs">Yes / Yes</span>
+                                    </td>
+                                    <td class="p-4">AutoGluon, SHAP, LIME</td>
+                                    <td class="p-4 text-emerald-400">Rural Afro-American: 91.36% Accuracy</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 font-semibold text-white whitespace-nowrap">Assefa et al. (2025)</td>
+                                    <td class="p-4">Medication Adherence</td>
+                                    <td class="p-4">GMAS questionnaire responses</td>
+                                    <td class="p-4 whitespace-nowrap">403</td>
+                                    <td class="p-4 text-center">
+                                        <span class="px-2 py-1 bg-white/10 rounded-md text-xs">No / No</span>
+                                    </td>
+                                    <td class="p-4">SVM, Decision Tree, 1DCNN</td>
+                                    <td class="p-4 text-emerald-400">SVM achieved AUC of 0.9998 after SMOTE</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 font-semibold text-white whitespace-nowrap">Saxena et al. (2023)</td>
+                                    <td class="p-4">Diabetic Complications</td>
+                                    <td class="p-4">Demographics, biomarkers</td>
+                                    <td class="p-4 whitespace-nowrap">10,000</td>
+                                    <td class="p-4 text-center">
+                                        <span class="px-2 py-1 bg-white/10 rounded-md text-xs">No / No</span>
+                                    </td>
+                                    <td class="p-4">RF, GB, SVM, Cluster Analysis</td>
+                                    <td class="p-4 text-emerald-400">Retinopathy AUC 0.92, Nephropathy Sensitivity 88%</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 font-semibold text-white whitespace-nowrap">Qian et al. (2021)</td>
+                                    <td class="p-4">Preventive Allocation (EHR)</td>
+                                    <td class="p-4">EHR Demographics</td>
+                                    <td class="p-4 whitespace-nowrap">89,191 prediabetic</td>
+                                    <td class="p-4 text-center">
+                                        <span class="px-2 py-1 bg-white/10 rounded-md text-xs">No / No</span>
+                                    </td>
+                                    <td class="p-4">Gradient-boosted decision trees</td>
+                                    <td class="p-4 text-emerald-400">Prevented 25% more cases, potential $1.1B savings</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 font-semibold text-white whitespace-nowrap">Singh et al. (2025)</td>
+                                    <td class="p-4">Causal Inference</td>
+                                    <td class="p-4">Pima Indian dataset</td>
+                                    <td class="p-4 whitespace-nowrap">768</td>
+                                    <td class="p-4 text-center">
+                                        <span class="px-2 py-1 bg-white/10 rounded-md text-xs">Yes / No</span>
+                                    </td>
+                                    <td class="p-4">LiNGAM, DoWhy, DL</td>
+                                    <td class="p-4 text-emerald-400">Accuracy ~84.8%, Extracted Causal Effect Estimates</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 font-semibold text-white whitespace-nowrap">Jabeur et al. (2025)</td>
+                                    <td class="p-4">Imbalanced Datasets</td>
+                                    <td class="p-4">PIMA, BIT_2019</td>
+                                    <td class="p-4 whitespace-nowrap">768, 952</td>
+                                    <td class="p-4 text-center">
+                                        <span class="px-2 py-1 bg-white/10 rounded-md text-xs">Yes / Yes</span>
+                                    </td>
+                                    <td class="p-4">RF, XGBoost, LightGBM</td>
+                                    <td class="p-4 text-emerald-400">RF w/ SMOTE achieved best specificty and ROC</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 font-semibold text-white whitespace-nowrap">Li et al. (2022)</td>
+                                    <td class="p-4">Diabetic Retinopathy Diagnosis</td>
+                                    <td class="p-4">Retinal fundus & OCT images</td>
+                                    <td class="p-4 whitespace-nowrap">Review</td>
+                                    <td class="p-4 text-center">
+                                        <span class="px-2 py-1 bg-white/10 rounded-md text-xs">Yes / No</span>
+                                    </td>
+                                    <td class="p-4">Deep Learning (CNNs)</td>
+                                    <td class="p-4 text-emerald-400">AUC 0.97-0.99: Physician-level accuracy</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Challenges -->
+            <section id="challenges" class="space-y-8">
+                <div class="reveal">
+                    <h3 class="text-sm font-bold tracking-widest text-gray-500 uppercase mb-2">6. The Reality</h3>
+                    <h2 class="text-3xl font-bold">Challenges and Limitations</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal">
+                    <div class="glass p-8 rounded-2xl flex flex-col h-full hover:border-red-500/30 transition-colors">
+                        <i class="fa-solid fa-database text-red-500 text-3xl mb-4"></i>
+                        <h4 class="text-lg font-bold text-white mb-2">Data Quality & Privacy</h4>
+                        <p class="text-gray-400 font-light text-sm">Access to large, diverse, rigorously annotated datasets is rare. Fragmented healthcare systems lead to data silos, while strict privacy regulations can delay ethical clinical trial usage.</p>
+                    </div>
+                    
+                    <div class="glass p-8 rounded-2xl flex flex-col h-full hover:border-yellow-500/30 transition-colors">
+                        <i class="fa-solid fa-cube text-yellow-500 text-3xl mb-4"></i>
+                        <h4 class="text-lg font-bold text-white mb-2">The "Black Box" Problem</h4>
+                        <p class="text-gray-400 font-light text-sm">Deep learning architectures often output opaque predictions. Explainable AI (XAI) such as SHAP and LIME is imperative to bridge the trust gap with frontline clinicians.</p>
+                    </div>
+
+                    <div class="glass p-8 rounded-2xl flex flex-col h-full md:col-span-2 hover:border-blue-500/30 transition-colors">
+                        <i class="fa-solid fa-scale-balanced text-blue-500 text-3xl mb-4"></i>
+                        <h4 class="text-lg font-bold text-white mb-2">Algorithmic Bias, Fairness & Generalizability</h4>
+                        <p class="text-gray-400 font-light text-sm">Models trained on specific subgroups can encode systemic inequalities and perform poorly outside their localized hospital system. Rigorous validation on diverse populations and mitigating class imbalances are clinical mandates prior to real-world deployment.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Future -->
+            <section id="future" class="space-y-8">
+                <div class="reveal">
+                    <h3 class="text-sm font-bold tracking-widest text-cyan-500 uppercase mb-2">7. Looking Ahead</h3>
+                    <h2 class="text-3xl font-bold">Trends & Future Directions</h2>
+                </div>
+
+                <div class="glass-card p-8 rounded-2xl reveal space-y-6">
+                    <div class="flex gap-4 items-start">
+                        <div class="w-10 h-10 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center shrink-0 mt-1"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                        <div>
+                            <h4 class="font-bold text-white mb-1">Precision Medicine</h4>
+                            <p class="text-gray-400 text-sm font-light leading-relaxed">AI's ability to scrutinize high-dimensional data targets unique patient profiles, shifting the paradigm completely away from "one-size-fits-all" interventions.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 items-start">
+                        <div class="w-10 h-10 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center shrink-0 mt-1"><i class="fa-solid fa-layer-group"></i></div>
+                        <div>
+                            <h4 class="font-bold text-white mb-1">Multi-Modal Integration</h4>
+                            <p class="text-gray-400 text-sm font-light leading-relaxed">Conjoining clinical, imaging, wearable, and omic (genetic, epigenetic) data into singular, holistic AI prognostic pipelines.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 items-start">
+                        <div class="w-10 h-10 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center shrink-0 mt-1"><i class="fa-solid fa-mobile-screen"></i></div>
+                        <div>
+                            <h4 class="font-bold text-white mb-1">Automated Interventions</h4>
+                            <p class="text-gray-400 text-sm font-light leading-relaxed">Real-time artificial pancreas operations and AI-driven automated insulin delivery, predicting hypoglycemic storms hours before they occur.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Conclusion -->
+            <section id="conclusion" class="space-y-8">
+                <div class="reveal">
+                    <h3 class="text-sm font-bold tracking-widest text-pink-500 uppercase mb-2">8. Finale</h3>
+                    <h2 class="text-3xl font-bold">Conclusion</h2>
+                </div>
+
+                <div class="glass-card border-l-4 border-pink-500 p-8 rounded-2xl reveal">
+                    <p class="text-gray-300 font-light leading-relaxed mb-4 text-lg">
+                        Artificial intelligence stands as a transformative force with immense potential to revolutionize the landscape of diabetes management and research. AI holds the key to addressing the growing global burden. 
+                    </p>
+                    <p class="text-gray-300 font-light leading-relaxed">
+                        Fostering interdisciplinary collaboration between AI researchers, clinicians, and patients will be essential for developing solutions that are not only technologically advanced but also clinically relevant. The ongoing advancements in AI pave the way for a future where diabetes care is proactive, precise, and equitable.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Footer Author Card -->
+            <div class="mt-24 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center gap-6 glass p-6 rounded-2xl reveal">
+                <div class="flex gap-0 -space-x-4">
+                    <img src="Abhijeet Patel.jpg" class="w-16 h-16 rounded-full border-2 border-black object-cover scale-125 object-top z-20" alt="Dr. Abhijeet Patel" onerror="this.src='https://ui-avatars.com/api/?name=Abhijeet+Patel&background=2997ff&color=fff'">
+                    <img src="Vatsal_Patel.jpg" class="w-16 h-16 rounded-full border-2 border-black object-cover scale-[1.3] origin-[50%_20%] z-10" alt="Vatsal Patel" onerror="this.src='https://ui-avatars.com/api/?name=Vatsal+Patel&background=2997ff&color=fff'">
+                </div>
+                <div>
+                    <h4 class="font-bold text-white">Authors</h4>
+                    <p class="text-gray-400 text-sm">Dr. Abhijeet Patel & Vatsal Patel | HawkFranklin Research</p>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            reveals.forEach(reveal => observer.observe(reveal));
+        });
+    </script>
+</body>
+</html>

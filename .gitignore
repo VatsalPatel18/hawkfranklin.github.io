@@ -9,3 +9,4 @@ fdroid/config.yml
 # GitHub blocks files >100MB if they appear in history.
 downloads/aura/*.apk
 fdroid/repo/*.apk
+conference/arab_health_26/20260210_104956.mp4
