@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DermAI for Emirates Health Services | HawkFranklin Research</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="../assets/css/theme.css" rel="stylesheet" />
+    <style>
+        :root {
+            color-scheme: light;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at top left, rgba(14, 165, 233, 0.14), transparent 30%),
+                linear-gradient(180deg, #eff6ff 0%, #ffffff 32%, #f8fafc 100%);
+        }
+
+        .hero-shell {
+            background:
+                radial-gradient(circle at top, rgba(125, 211, 252, 0.18), transparent 40%),
+                linear-gradient(135deg, #082f49 0%, #0f172a 52%, #082f49 100%);
+        }
+
+        .signal-chip {
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            background: rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+        }
+
+        .video-shell {
+            position: relative;
+            border-radius: 2rem;
+            overflow: hidden;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            background:
+                radial-gradient(circle at top, rgba(14, 165, 233, 0.25), rgba(2, 6, 23, 0.92) 58%),
+                #020617;
+            box-shadow: 0 35px 80px -40px rgba(2, 132, 199, 0.5);
+        }
+
+        .video-frame {
+            width: 100%;
+            height: clamp(24rem, 74vh, 52rem);
+            background: #020617;
+        }
+
+        .video-frame video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.82);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            box-shadow: 0 20px 45px -36px rgba(15, 23, 42, 0.4);
+        }
+
+        .condition-pill {
+            border: 1px solid rgba(14, 165, 233, 0.16);
+            background: linear-gradient(135deg, rgba(240, 249, 255, 0.95), rgba(236, 254, 255, 0.95));
+            color: #0f172a;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800">
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-dark-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="../index.html" class="flex items-center gap-3" aria-label="HawkFranklin Research">
+        <img src="../assets/img/HawkFranklin_Aug23.transparent.png" alt="HFR" class="logo-header" />
+      </a>
+      <nav class="hidden md:flex items-center gap-8 text-base lg:text-lg font-medium">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="../index.html#products" class="nav-link nav-active">Products</a>
+        <a href="../research.html" class="nav-link">Research</a>
+        <a href="../aclis.html" class="nav-link">ACLIS</a>
+        <a href="../publications.html" class="nav-link">Publications</a>
+        <a href="../about.html" class="nav-link">About</a>
+      </nav>
+      <div class="hidden md:block">
+        <a href="../schedule.html" class="btn-primary">Schedule Demo</a>
+      </div>
+      <button id="menuBtn" class="md:hidden p-2 rounded hover:bg-dark-100" aria-label="Open menu">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+    <div id="mobileMenu" class="md:hidden hidden border-t border-dark-200 bg-white">
+      <nav class="px-4 py-3 flex flex-col gap-3 text-sm">
+        <a href="../index.html" class="py-2 font-medium">Home</a>
+        <a href="../index.html#products" class="py-2">Products</a>
+        <a href="../research.html" class="py-2">Research</a>
+        <a href="../aclis.html" class="py-2">ACLIS</a>
+        <a href="../publications.html" class="py-2">Publications</a>
+        <a href="../about.html" class="py-2">About</a>
+        <a href="../schedule.html" class="btn-primary text-center mt-2">Schedule Demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="kiosk-video" class="hero-shell text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-18 lg:py-24">
+        <div class="max-w-4xl mx-auto text-center">
+            <p class="inline-flex items-center rounded-full border border-sky-300/35 bg-sky-400/10 px-4 py-1.5 font-semibold text-sky-200 uppercase tracking-[0.12em] text-xs sm:text-sm">
+              WHX Health Dubai 2026 Kiosk Demo
+            </p>
+            <h1 class="mt-5 font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+              DermAI for Emirates Health Services Built by HawkFranklin Research
+            </h1>
+            <p class="mt-6 text-lg sm:text-xl text-sky-100 leading-relaxed max-w-2xl mx-auto">
+              HawkFranklin Research designed this Emirates Health Services deployment as a white-labeled
+              Derma AI experience built on the PelliScope stack, with Oracle Health collaboration supporting
+              real-world triage and clinician-facing differential workflow previews.
+            </p>
+            <p class="mt-4 text-base sm:text-lg text-slate-200/90 leading-relaxed max-w-2xl mx-auto">
+              The kiosk demo highlights a focused 10-condition dermatology panel, infectious versus
+              non-infectious screening support, and a deployment shape that fits patient intake desks,
+              booth walk-throughs, and clinical environment pilots.
+            </p>
+            <div class="mt-7 flex flex-wrap justify-center gap-3 text-sm">
+              <span class="signal-chip rounded-full px-4 py-2">10-condition triage panel</span>
+              <span class="signal-chip rounded-full px-4 py-2">EHS deployment showcase</span>
+              <span class="signal-chip rounded-full px-4 py-2">Oracle Health collaboration</span>
+              <span class="signal-chip rounded-full px-4 py-2">Built by HawkFranklin Research</span>
+            </div>
+            <div class="mt-8 flex flex-wrap justify-center gap-4">
+              <a href="#kiosk-player" class="bg-white hover:bg-slate-100 text-sky-700 px-8 py-3.5 rounded-lg font-medium transition duration-300 inline-flex items-center">
+                <i class="fas fa-play-circle mr-2"></i> Watch Kiosk Demo
+              </a>
+              <a href="pelliscope.html" class="border-2 border-sky-200/90 text-white hover:bg-sky-300/10 px-8 py-3.5 rounded-lg font-medium transition duration-300 inline-flex items-center">
+                <i class="fas fa-info-circle mr-2"></i> Explore PelliScope
+              </a>
+            </div>
+        </div>
+        <div id="kiosk-player" class="mt-12 video-shell">
+          <div class="video-frame">
+            <video id="kioskVideo" autoplay muted playsinline controls preload="metadata">
+              <source src="../assets/video/derma_ai_kiosk_ehs_video.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+        <p class="mt-4 text-sm text-slate-300 text-center">
+          Full kiosk preview from the EHS-focused Derma AI demonstration, with native controls for pause, seek, replay, and fullscreen.
+        </p>
+      </div>
+    </section>
+
+    <section id="deployment-overview" class="py-16 sm:py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid gap-6 lg:grid-cols-3">
+          <article class="metric-card rounded-3xl p-7">
+            <div class="w-12 h-12 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center text-xl">
+              <i class="fas fa-shield-virus"></i>
+            </div>
+            <h3 class="mt-5 text-2xl font-bold text-dark-900">Clinical intake support</h3>
+            <p class="mt-3 text-dark-600 leading-relaxed">
+              The EHS-branded experience communicates fast lesion triage support, including infectious versus
+              non-infectious guidance that helps staff route cases more confidently during first contact.
+            </p>
+          </article>
+
+          <article class="metric-card rounded-3xl p-7">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl">
+              <i class="fas fa-microscope"></i>
+            </div>
+            <h3 class="mt-5 text-2xl font-bold text-dark-900">10-condition differential panel</h3>
+            <p class="mt-3 text-dark-600 leading-relaxed">
+              HawkFranklin Research adapted the underlying PelliScope logic into a presentation tailored for
+              Emirates Health Services, centered on a practical disease set for live kiosk discussions and pilot deployment planning.
+            </p>
+          </article>
+
+          <article class="metric-card rounded-3xl p-7">
+            <div class="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-xl">
+              <i class="fas fa-server"></i>
+            </div>
+            <h3 class="mt-5 text-2xl font-bold text-dark-900">Deployment-minded engineering</h3>
+            <p class="mt-3 text-dark-600 leading-relaxed">
+              The system is positioned for real operational environments, balancing clinician-facing usability,
+              controlled infrastructure expectations, and white-label presentation suitable for institutional rollout conversations.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 bg-white border-y border-slate-200/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] items-start">
+          <div>
+            <p class="text-sm font-semibold uppercase tracking-[0.18em] text-sky-700">Condition Coverage</p>
+            <h2 class="mt-3 text-3xl sm:text-4xl font-bold text-dark-900">The same PelliScope intelligence, rebranded for EHS</h2>
+            <p class="mt-4 text-lg text-dark-600 leading-relaxed">
+              This showcase represents HawkFranklin Research product engineering adapted for Emirates Health Services.
+              The underlying DermAI workflow is built to communicate differential support across ten common conditions in a kiosk-ready form factor.
+            </p>
+            <p class="mt-4 text-dark-600 leading-relaxed">
+              For WHX Health and partner demonstrations, that meant presenting the experience as an EHS-aligned deployment:
+              polished enough for public preview, concrete enough for hospital workflow discussions, and clearly owned by the HawkFranklin team that built it.
+            </p>
+          </div>
+          <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-3">
+            <div class="condition-pill rounded-2xl px-4 py-4 font-semibold">Eczema</div>
+            <div class="condition-pill rounded-2xl px-4 py-4 font-semibold">Allergic Contact Dermatitis</div>
+            <div class="condition-pill rounded-2xl px-4 py-4 font-semibold">Insect Bite</div>
+            <div class="condition-pill rounded-2xl px-4 py-4 font-semibold">Urticaria</div>
+            <div class="condition-pill rounded-2xl px-4 py-4 font-semibold">Psoriasis</div>
+            <div class="condition-pill rounded-2xl px-4 py-4 font-semibold">Folliculitis</div>
+            <div class="condition-pill rounded-2xl px-4 py-4 font-semibold">Irritant Contact Dermatitis</div>
+            <div class="condition-pill rounded-2xl px-4 py-4 font-semibold">Tinea</div>
+            <div class="condition-pill rounded-2xl px-4 py-4 font-semibold">Herpes Zoster</div>
+            <div class="condition-pill rounded-2xl px-4 py-4 font-semibold">Drug Rash</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 text-white relative overflow-hidden" style="background: linear-gradient(135deg, #4338ca 0%, #2563eb 50%, #0891b2 100%);">
+      <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(1000px 400px at 10% 20%, #ffffff 0, transparent 60%), radial-gradient(800px 300px at 90% 80%, #ffffff 0, transparent 60%)"></div>
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="font-display text-3xl sm:text-4xl font-bold mb-6">Showcasing product engineering that is ready for institutional partners</h2>
+        <p class="text-xl text-blue-100 max-w-3xl mx-auto mb-8">
+          HawkFranklin Research built the underlying DermAI workflow, adapted the delivery for EHS, and presented it as a live deployment-ready experience at WHX Health Dubai.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="pelliscope.html" class="bg-white hover:bg-slate-100 text-indigo-700 px-8 py-3.5 rounded-lg font-medium transition duration-300 inline-flex items-center">
+            <i class="fas fa-box-open mr-2"></i> PelliScope Product Page
+          </a>
+          <a href="../contact.html" class="border-2 border-white text-white hover:bg-white/10 px-8 py-3.5 rounded-lg font-medium transition duration-300 inline-flex items-center">
+            <i class="fas fa-envelope mr-2"></i> Contact HawkFranklin
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-dark-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid gap-12 md:grid-cols-4">
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <img src="../assets/img/HFR name logo 2.png" alt="HFR" class="logo-footer-wide" />
+          </div>
+          <p class="text-dark-300 text-sm">Advancing science through deep-tech AI research and clinical-grade product engineering.</p>
+          <div class="flex space-x-4 mt-6">
+            <a href="https://www.linkedin.com/company/hawk-franklin-research" class="text-dark-300 hover:text-white"><i class="fab fa-linkedin-in text-lg"></i></a>
+            <a href="https://github.com/HawkFranklin-Research" class="text-dark-300 hover:text-white"><i class="fab fa-github text-lg"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-semibold text-lg mb-4">Explore</h4>
+          <ul class="space-y-2 text-sm text-dark-300">
+            <li><a href="../aclis.html" class="hover:text-white">ACLIS</a></li>
+            <li><a href="../research.html" class="hover:text-white">Research</a></li>
+            <li><a href="../publications.html" class="hover:text-white">Publications</a></li>
+            <li><a href="../vision.html" class="hover:text-white">Vision & Ethics</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-lg mb-4">Company</h4>
+          <ul class="space-y-2 text-sm text-dark-300">
+            <li><a href="../about.html" class="hover:text-white">About</a></li>
+            <li><a href="../careers.html" class="hover:text-white">Careers</a></li>
+            <li><a href="../contact.html" class="hover:text-white">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-lg mb-4">Contact</h4>
+          <ul class="space-y-2 text-sm text-dark-300">
+            <li><a href="mailto:contact@hawk-franklin-research.com" class="hover:text-white">contact@hawk-franklin-research.com</a></li>
+            <li>India (Dot) Kalyani, West Bengal</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-dark-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-sm text-dark-400">© <span id="year"></span> HawkFranklin Research. All rights reserved.</p>
+        <div class="flex space-x-6 mt-4 md:mt-0">
+          <a href="../privacy.html" class="text-sm text-dark-400 hover:text-white">Privacy</a>
+          <a href="#" class="text-sm text-dark-400 hover:text-white">Terms</a>
+          <a href="#" class="text-sm text-dark-400 hover:text-white">Security</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (menuBtn && mobileMenu) {
+      menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    }
+
+    const year = document.getElementById('year');
+    if (year) year.textContent = new Date().getFullYear();
+
+    const autoplayVideos = Array.from(document.querySelectorAll('video[autoplay]'));
+    autoplayVideos.forEach((video) => {
+      video.play().catch(() => {});
+    });
+  </script>
+</body>
+</html>
