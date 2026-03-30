@@ -24,6 +24,12 @@
                 linear-gradient(135deg, #082f49 0%, #0f172a 52%, #082f49 100%);
         }
 
+        .hero-grid {
+            display: grid;
+            gap: 2rem;
+            align-items: center;
+        }
+
         .signal-chip {
             border: 1px solid rgba(148, 163, 184, 0.28);
             background: rgba(255, 255, 255, 0.1);
@@ -65,6 +71,12 @@
             background: linear-gradient(135deg, rgba(240, 249, 255, 0.95), rgba(236, 254, 255, 0.95));
             color: #0f172a;
         }
+
+        @media (min-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+            }
+        }
     </style>
 </head>
 <body class="font-sans antialiased text-gray-800">
@@ -104,30 +116,31 @@
   <main>
     <section id="kiosk-video" class="hero-shell text-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-18 lg:py-24">
-        <div class="max-w-4xl mx-auto text-center">
+        <div class="hero-grid">
+          <div class="lg:pr-6">
             <p class="inline-flex items-center rounded-full border border-sky-300/35 bg-sky-400/10 px-4 py-1.5 font-semibold text-sky-200 uppercase tracking-[0.12em] text-xs sm:text-sm">
               WHX Health Dubai 2026 Kiosk Demo
             </p>
             <h1 class="mt-5 font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
               DermAI for Emirates Health Services Built by HawkFranklin Research
             </h1>
-            <p class="mt-6 text-lg sm:text-xl text-sky-100 leading-relaxed max-w-2xl mx-auto">
+            <p class="mt-6 text-lg sm:text-xl text-sky-100 leading-relaxed max-w-2xl">
               HawkFranklin Research designed this Emirates Health Services deployment as a white-labeled
               Derma AI experience built on the PelliScope stack, with Oracle Health collaboration supporting
               real-world triage and clinician-facing differential workflow previews.
             </p>
-            <p class="mt-4 text-base sm:text-lg text-slate-200/90 leading-relaxed max-w-2xl mx-auto">
+            <p class="mt-4 text-base sm:text-lg text-slate-200/90 leading-relaxed max-w-2xl">
               The kiosk demo highlights a focused 10-condition dermatology panel, infectious versus
               non-infectious screening support, and a deployment shape that fits patient intake desks,
               booth walk-throughs, and clinical environment pilots.
             </p>
-            <div class="mt-7 flex flex-wrap justify-center gap-3 text-sm">
+            <div class="mt-7 flex flex-wrap gap-3 text-sm">
               <span class="signal-chip rounded-full px-4 py-2">10-condition triage panel</span>
               <span class="signal-chip rounded-full px-4 py-2">EHS deployment showcase</span>
               <span class="signal-chip rounded-full px-4 py-2">Oracle Health collaboration</span>
               <span class="signal-chip rounded-full px-4 py-2">Built by HawkFranklin Research</span>
             </div>
-            <div class="mt-8 flex flex-wrap justify-center gap-4">
+            <div class="mt-8 flex flex-wrap gap-4">
               <a href="#kiosk-player" class="bg-white hover:bg-slate-100 text-sky-700 px-8 py-3.5 rounded-lg font-medium transition duration-300 inline-flex items-center">
                 <i class="fas fa-play-circle mr-2"></i> Watch Kiosk Demo
               </a>
@@ -135,18 +148,21 @@
                 <i class="fas fa-info-circle mr-2"></i> Explore PelliScope
               </a>
             </div>
-        </div>
-        <div id="kiosk-player" class="mt-12 video-shell">
-          <div class="video-frame">
-            <video id="kioskVideo" autoplay muted playsinline controls preload="metadata">
-              <source src="../assets/video/derma_ai_kiosk_ehs_video.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
+          </div>
+          <div class="lg:pl-4">
+            <div id="kiosk-player" class="video-shell">
+              <div class="video-frame">
+                <video id="kioskVideo" autoplay muted playsinline controls preload="metadata">
+                  <source src="../assets/video/derma_ai_kiosk_ehs_video.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+            <p class="mt-4 text-sm text-slate-300 text-center">
+              Full kiosk preview from the EHS-focused Derma AI demonstration, with native controls for pause, seek, replay, and fullscreen.
+            </p>
           </div>
         </div>
-        <p class="mt-4 text-sm text-slate-300 text-center">
-          Full kiosk preview from the EHS-focused Derma AI demonstration, with native controls for pause, seek, replay, and fullscreen.
-        </p>
       </div>
     </section>
 
