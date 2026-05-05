@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://your-domain.example/</loc></url>
-  <url><loc>https://your-domain.example/aclis.html</loc></url>
-  <url><loc>https://your-domain.example/research.html</loc></url>
-  <url><loc>https://your-domain.example/publications.html</loc></url>
-  <url><loc>https://your-domain.example/vision.html</loc></url>
-  <url><loc>https://your-domain.example/about.html</loc></url>
-  <url><loc>https://your-domain.example/careers.html</loc></url>
-  <url><loc>https://your-domain.example/contact.html</loc></url>
+  <url><loc>https://hawkfranklin.in/</loc></url>
+  <url><loc>https://hawkfranklin.in/about.html</loc></url>
+  <url><loc>https://hawkfranklin.in/aclis.html</loc></url>
+  <url><loc>https://hawkfranklin.in/research.html</loc></url>
+  <url><loc>https://hawkfranklin.in/publications.html</loc></url>
+  <url><loc>https://hawkfranklin.in/vision.html</loc></url>
+  <url><loc>https://hawkfranklin.in/careers.html</loc></url>
+  <url><loc>https://hawkfranklin.in/contact.html</loc></url>
+  <url><loc>https://hawkfranklin.in/schedule.html</loc></url>
+  <url><loc>https://hawkfranklin.in/partnership.html</loc></url>
+  <url><loc>https://hawkfranklin.in/privacy.html</loc></url>
 </urlset>
-
