@@ -10,6 +10,11 @@
   <meta name="theme-color" content="#0f172a" />
   <link rel="canonical" href="https://hawkfranklin.in/" />
   <link rel="icon" href="assets/img/Hawk_only_logo_may_circle.drawio.png" />
+  <script>
+    if (location.pathname.endsWith('/index.html')) {
+      location.replace('/');
+    }
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script>
@@ -225,7 +230,7 @@
   <!-- Header -->
   <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-dark-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-3" aria-label="HawkFranklin Research">
+      <a href="/" class="flex items-center gap-3" aria-label="HawkFranklin Research">
         <img src="assets/img/HawkFranklin_Aug23.transparent.png" alt="HFR" class="h-[76px] w-auto" />
       </a>
       <nav class="hidden md:flex items-center gap-8 text-base lg:text-lg font-medium">
@@ -415,7 +420,7 @@
                 support.
               </p>
               <div class="flex flex-col gap-2 text-sm font-medium">
-                <a href="https://hawkfranklin.in/downloads/aura/AURA.apk" class="btn-primary inline-flex items-center justify-center rounded-lg text-white px-4 py-2">
+                <a href="https://hawkfranklin.in/downloads/aura/AURA.apk" rel="nofollow" class="btn-primary inline-flex items-center justify-center rounded-lg text-white px-4 py-2">
                   Download APK
                 </a>
                 <a href="https://hawkfranklin.in/downloads/derma_ai.zip" download="derma_ai.zip" class="btn-outline inline-flex items-center justify-center rounded-lg text-primary-600 px-4 py-2">

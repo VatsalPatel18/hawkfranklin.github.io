@@ -11,11 +11,13 @@ if (year) year.textContent = new Date().getFullYear();
 
 // Active nav link highlight
 (function highlightNav() {
-  const path = location.pathname.split('/').pop() || 'index.html';
+  const path = location.pathname === '/' || location.pathname.endsWith('/index.html')
+    ? '/'
+    : location.pathname.split('/').pop() || '/';
   const links = document.querySelectorAll('nav a, header a.nav-link');
   links.forEach((a) => {
     const href = a.getAttribute('href');
-    const target = href === '/' ? 'index.html' : href;
+    const target = href === '/' || href === 'index.html' ? '/' : href;
     if (target === path) {
       a.classList.add('nav-active');
       a.setAttribute('aria-current', 'page');
