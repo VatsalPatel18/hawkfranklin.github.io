@@ -9,5 +9,6 @@ Disallow: /derma-ai-brochure_v3.html
 Disallow: /gab2.html
 Disallow: /research_current.html
 Disallow: /template.html
+Disallow: /products/ml_copilot_agent.backup.html
 
 Sitemap: https://hawkfranklin.in/sitemap.xml
