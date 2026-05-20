@@ -1,5 +1,13 @@
 User-agent: *
 Disallow: /index.html
 Disallow: /downloads/aura/
+Disallow: /aclis_old.html
+Disallow: /aclis_slide_change_usp.html
+Disallow: /derma-ai-brochure.html
+Disallow: /derma-ai-brochure_v2.html
+Disallow: /derma-ai-brochure_v3.html
+Disallow: /gab2.html
+Disallow: /research_current.html
+Disallow: /template.html
 
 Sitemap: https://hawkfranklin.in/sitemap.xml
