@@ -1,605 +1,1643 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AURA | HawkFranklin Research</title>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nimbo | The AI that doesn't need the internet</title>
     <link rel="canonical" href="https://hawkfranklin.in/products/aura2.html" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="../assets/css/theme.css" rel="stylesheet" />
-    
-    <!-- HFR Standard Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lexend:wght@400;500;700&display=swap" rel="stylesheet">
-
+    <link rel="icon" type="image/svg+xml" href="../assets/img/logo.svg" />
+    <meta
+      name="description"
+      content="Nimbo is a private Android AI assistant that works on or offline. Download a model once, then chat anywhere with no account, no ads, and no cloud round-trips."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
     <style>
-        /* HFR "Inverted" Palette */
-        :root {
-            --hfr-void: #020617;     /* Slate 950 */
-            --hfr-surface: #0f172a;  /* Slate 900 */
-            --hfr-border: #1e293b;   /* Slate 800 */
-            --hfr-accent: #6366f1;   /* Indigo 500 */
-            --hfr-glow: #818cf8;     /* Indigo 400 */
+      :root {
+        --bg: #faf8f5;
+        --bg-warm: #f1ede6;
+        --ink: #1a1a1a;
+        --muted: #6b7280;
+        --muted-strong: #475569;
+        --surface: #ffffff;
+        --surface-soft: #f0ede8;
+        --line: rgba(26, 26, 26, 0.11);
+        --line-strong: rgba(26, 26, 26, 0.18);
+        --teal: #0e7c66;
+        --teal-light: #2dd4a7;
+        --coral: #ff6b4a;
+        --coral-soft: #ffe1d8;
+        --dark: #0d0d0f;
+        --dark-panel: #1a1a1e;
+        --cream: #fffdf9;
+        --shadow: 0 28px 70px rgba(42, 35, 26, 0.13);
+        --shadow-tight: 0 18px 44px rgba(20, 21, 24, 0.1);
+        --radius-card: 8px;
+        --radius-panel: 24px;
+        --max: 1200px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 12% 0%, rgba(45, 212, 167, 0.18), transparent 28%),
+          radial-gradient(circle at 88% 8%, rgba(255, 107, 74, 0.16), transparent 28%),
+          linear-gradient(180deg, #fffdf9 0%, var(--bg) 44%, #f4f0ea 100%);
+        overflow-x: hidden;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img,
+      video,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      .page-shell {
+        min-height: 100vh;
+        position: relative;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        padding: 1rem 1.25rem 0;
+      }
+
+      .topbar-inner {
+        max-width: var(--max);
+        margin: 0 auto;
+        min-height: 4.25rem;
+        padding: 0.7rem 0.9rem 0.7rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.78);
+        border-radius: 999px;
+        background: rgba(255, 253, 249, 0.72);
+        box-shadow: 0 18px 50px rgba(43, 35, 24, 0.08);
+        backdrop-filter: blur(22px);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        min-width: 0;
+      }
+
+      .brand-icon,
+      .app-icon {
+        width: 2.55rem;
+        height: 2.55rem;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        border-radius: 13px;
+        background: var(--teal);
+        color: #fff;
+        box-shadow: 0 12px 24px rgba(14, 124, 102, 0.23);
+      }
+
+      .brand-icon img,
+      .app-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .brand-letter {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        color: #fff;
+        font-size: 1.12rem;
+        font-weight: 850;
+        letter-spacing: -0.08em;
+        background:
+          radial-gradient(circle at 68% 26%, rgba(255, 107, 74, 0.96), transparent 18%),
+          linear-gradient(135deg, #0e7c66, #075848);
+      }
+
+      .brand-text strong {
+        display: block;
+        font-size: 1rem;
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+      }
+
+      .brand-text span {
+        display: block;
+        margin-top: 0.18rem;
+        color: var(--muted);
+        font-size: 0.74rem;
+        font-weight: 600;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 1.35rem;
+        color: rgba(26, 26, 26, 0.68);
+        font-size: 0.92rem;
+        font-weight: 700;
+      }
+
+      .nav-links a {
+        position: relative;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -0.38rem;
+        width: 100%;
+        height: 1px;
+        background: var(--teal);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 180ms ease;
+      }
+
+      .nav-links a:hover::after,
+      .nav-links a:focus-visible::after {
+        transform: scaleX(1);
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+      }
+
+      .button,
+      .button-muted,
+      .icon-button {
+        min-height: 2.9rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        cursor: pointer;
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease,
+          border-color 180ms ease,
+          background 180ms ease;
+      }
+
+      .button,
+      .button-muted {
+        gap: 0.55rem;
+        padding: 0.82rem 1.1rem;
+        border-radius: 999px;
+        font-size: 0.92rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        white-space: nowrap;
+      }
+
+      .button {
+        color: #fff;
+        background: var(--teal);
+        box-shadow: 0 16px 34px rgba(14, 124, 102, 0.22);
+      }
+
+      .button:hover,
+      .button:focus-visible,
+      .button-muted:hover,
+      .button-muted:focus-visible,
+      .icon-button:hover,
+      .icon-button:focus-visible {
+        transform: translateY(-2px);
+      }
+
+      .button:hover,
+      .button:focus-visible {
+        background: #096f5c;
+      }
+
+      .button-muted {
+        color: var(--ink);
+        background: rgba(255, 255, 255, 0.58);
+        border: 1px solid var(--line);
+      }
+
+      .icon-button {
+        width: 2.9rem;
+        display: none;
+        border-radius: 999px;
+        color: var(--ink);
+        background: rgba(255, 255, 255, 0.64);
+        border: 1px solid var(--line);
+      }
+
+      .mobile-menu {
+        display: none;
+        max-width: var(--max);
+        margin: 0.6rem auto 0;
+        padding: 0.75rem;
+        border: 1px solid rgba(255, 255, 255, 0.72);
+        border-radius: 22px;
+        background: rgba(255, 253, 249, 0.92);
+        box-shadow: var(--shadow-tight);
+      }
+
+      .mobile-menu.is-open {
+        display: grid;
+      }
+
+      .mobile-menu a {
+        padding: 0.9rem 1rem;
+        border-radius: 14px;
+        color: var(--muted-strong);
+        font-weight: 800;
+      }
+
+      .mobile-menu a:hover,
+      .mobile-menu a:focus-visible {
+        background: var(--surface-soft);
+        color: var(--ink);
+      }
+
+      .hero {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 2.5rem 1.25rem 1.5rem;
+        display: grid;
+        grid-template-columns: minmax(0, 0.94fr) minmax(360px, 0.86fr);
+        gap: clamp(2.5rem, 6vw, 5.5rem);
+        align-items: center;
+      }
+
+      .hero-copy h1,
+      .section-heading h2,
+      .video-copy h2,
+      .cta h2 {
+        margin: 0;
+        font-family: "Fraunces", Georgia, serif;
+        font-weight: 650;
+        letter-spacing: -0.055em;
+        line-height: 0.96;
+      }
+
+      .hero-copy h1 {
+        max-width: 11.5ch;
+        font-size: clamp(3.5rem, 6.5vw, 6.35rem);
+      }
+
+      .hero-copy .lede {
+        max-width: 38rem;
+        margin: 1.45rem 0 0;
+        color: var(--muted-strong);
+        font-size: clamp(1.04rem, 1.8vw, 1.24rem);
+        line-height: 1.82;
+      }
+
+      .hero-copy .button-row {
+        margin-top: 2rem;
+      }
+
+      .button-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.85rem;
+        align-items: center;
+      }
+
+      .trust-line {
+        margin: 1.2rem 0 0;
+        color: rgba(14, 124, 102, 0.96);
+        font-size: 0.93rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+
+      .hero-points {
+        max-width: 42rem;
+        margin: 1.5rem 0 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem 1.2rem;
+        color: rgba(26, 26, 26, 0.7);
+        font-size: 0.95rem;
+        font-weight: 650;
+      }
+
+      .hero-points span {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .hero-points span::before {
+        content: "";
+        width: 0.45rem;
+        height: 0.45rem;
+        border-radius: 999px;
+        background: var(--coral);
+      }
+
+      .hero-media {
+        position: relative;
+        min-height: 38rem;
+        display: grid;
+        place-items: center;
+      }
+
+      .phone-stage {
+        position: relative;
+        width: min(23.25rem, 100%);
+        isolation: isolate;
+      }
+
+      .phone-stage::before {
+        content: "";
+        position: absolute;
+        inset: 5% -10% 8%;
+        z-index: -1;
+        border-radius: 999px;
+        background:
+          radial-gradient(circle at 50% 50%, rgba(45, 212, 167, 0.32), transparent 44%),
+          radial-gradient(circle at 62% 24%, rgba(255, 107, 74, 0.23), transparent 32%);
+        filter: blur(24px);
+      }
+
+      .phone {
+        position: relative;
+        min-height: 38.6rem;
+        padding: 0.7rem;
+        border-radius: 3.2rem;
+        background: linear-gradient(145deg, #252528, #0d0d0f 48%, #323238);
+        box-shadow: 0 42px 90px rgba(16, 17, 18, 0.34);
+      }
+
+      .phone::before {
+        content: "";
+        position: absolute;
+        top: 1rem;
+        left: 50%;
+        width: 7.5rem;
+        height: 1.6rem;
+        border-radius: 999px;
+        background: #050506;
+        transform: translateX(-50%);
+        z-index: 3;
+      }
+
+      .phone-screen {
+        min-height: 37.2rem;
+        overflow: hidden;
+        border-radius: 2.65rem;
+        background: var(--dark);
+        color: #f5f5f4;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .status-bar {
+        height: 3.1rem;
+        padding: 0.8rem 1.15rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: rgba(245, 245, 244, 0.92);
+        font-size: 0.78rem;
+        font-weight: 800;
+      }
+
+      .status-icons {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+      }
+
+      .app-head {
+        padding: 1rem 1.05rem 0.85rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        border-bottom: 1px solid rgba(245, 245, 244, 0.08);
+      }
+
+      .assistant-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.65rem;
+        min-width: 0;
+      }
+
+      .assistant-label .app-icon {
+        width: 2.45rem;
+        height: 2.45rem;
+        border-radius: 13px;
+        box-shadow: none;
+      }
+
+      .assistant-label strong {
+        display: block;
+        font-size: 0.98rem;
+        letter-spacing: -0.03em;
+      }
+
+      .assistant-label span,
+      .offline-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.38rem;
+        color: rgba(245, 245, 244, 0.62);
+        font-size: 0.72rem;
+        font-weight: 700;
+      }
+
+      .offline-pill {
+        min-height: 1.9rem;
+        padding: 0.35rem 0.65rem;
+        border: 1px solid rgba(45, 212, 167, 0.24);
+        border-radius: 999px;
+        color: var(--teal-light);
+        background: rgba(45, 212, 167, 0.08);
+        white-space: nowrap;
+      }
+
+      .green-dot {
+        width: 0.48rem;
+        height: 0.48rem;
+        border-radius: 999px;
+        background: var(--teal-light);
+        box-shadow: 0 0 0 4px rgba(45, 212, 167, 0.1);
+      }
+
+      .chat {
+        flex: 1;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.78rem;
+      }
+
+      .chat-day {
+        align-self: center;
+        margin: 0.2rem 0 0.3rem;
+        color: rgba(245, 245, 244, 0.45);
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .bubble {
+        max-width: 86%;
+        padding: 0.82rem 0.92rem;
+        border-radius: 1.1rem;
+        font-size: 0.84rem;
+        line-height: 1.55;
+      }
+
+      .bubble.user {
+        align-self: flex-end;
+        border-bottom-right-radius: 0.32rem;
+        background: var(--teal);
+        color: #fff;
+      }
+
+      .bubble.ai {
+        align-self: flex-start;
+        border-bottom-left-radius: 0.32rem;
+        background: var(--dark-panel);
+        color: rgba(245, 245, 244, 0.88);
+        border: 1px solid rgba(245, 245, 244, 0.07);
+      }
+
+      .prompt-chips {
+        margin-top: auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .prompt-chips span {
+        min-height: 2rem;
+        display: inline-flex;
+        align-items: center;
+        padding: 0.4rem 0.65rem;
+        border-radius: 999px;
+        color: rgba(245, 245, 244, 0.72);
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        font-size: 0.72rem;
+        font-weight: 700;
+      }
+
+      .composer {
+        padding: 0.85rem;
+        border-top: 1px solid rgba(245, 245, 244, 0.08);
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .composer-inner {
+        min-height: 3.05rem;
+        padding: 0.45rem 0.45rem 0.45rem 0.95rem;
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        background: #111114;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .composer-inner span {
+        color: rgba(245, 245, 244, 0.46);
+        font-size: 0.82rem;
+      }
+
+      .send-button {
+        width: 2.15rem;
+        height: 2.15rem;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        color: var(--dark);
+        background: var(--teal-light);
+      }
+
+      .floating-note {
+        position: absolute;
+        max-width: 13.5rem;
+        padding: 0.95rem 1rem;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.78);
+        border: 1px solid rgba(255, 255, 255, 0.72);
+        box-shadow: var(--shadow-tight);
+        backdrop-filter: blur(18px);
+      }
+
+      .floating-note strong {
+        display: block;
+        font-size: 0.92rem;
+        letter-spacing: -0.03em;
+      }
+
+      .floating-note span {
+        display: block;
+        margin-top: 0.38rem;
+        color: var(--muted);
+        font-size: 0.78rem;
+        line-height: 1.5;
+      }
+
+      .floating-note.top {
+        left: -4rem;
+        top: 4.8rem;
+        animation: floatOne 7s ease-in-out infinite;
+      }
+
+      .floating-note.bottom {
+        right: -4.2rem;
+        bottom: 6.7rem;
+        animation: floatTwo 7.5s ease-in-out infinite;
+      }
+
+      .section {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 5.5rem 1.25rem;
+      }
+
+      .section-heading {
+        display: grid;
+        grid-template-columns: minmax(0, 0.8fr) minmax(280px, 0.62fr);
+        gap: 2rem;
+        align-items: end;
+        margin-bottom: 2.2rem;
+      }
+
+      .section-heading h2,
+      .video-copy h2,
+      .cta h2 {
+        font-size: clamp(2.35rem, 4vw, 4.35rem);
+      }
+
+      .section-heading p,
+      .video-copy p,
+      .cta p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.02rem;
+        line-height: 1.75;
+      }
+
+      .benefit-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .benefit-card,
+      .model-card {
+        padding: 1.4rem;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-card);
+        background: rgba(255, 255, 255, 0.72);
+        box-shadow: 0 20px 52px rgba(47, 38, 28, 0.07);
+      }
+
+      .benefit-icon {
+        width: 2.65rem;
+        height: 2.65rem;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        color: var(--teal);
+        background: rgba(14, 124, 102, 0.09);
+      }
+
+      .benefit-card:nth-child(2) .benefit-icon {
+        color: var(--coral);
+        background: var(--coral-soft);
+      }
+
+      .benefit-card h3,
+      .model-card h3,
+      .step-copy h3 {
+        margin: 1rem 0 0.45rem;
+        font-size: 1.35rem;
+        letter-spacing: -0.045em;
+      }
+
+      .benefit-card p,
+      .model-card p,
+      .step-copy p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .how {
+        display: grid;
+        grid-template-columns: minmax(0, 0.72fr) minmax(340px, 0.8fr);
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .steps {
+        display: grid;
+        gap: 0;
+      }
+
+      .step {
+        display: grid;
+        grid-template-columns: 3.2rem minmax(0, 1fr);
+        gap: 1rem;
+        padding: 1.45rem 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .step:last-child {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .step-index {
+        width: 2.3rem;
+        height: 2.3rem;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        color: #fff;
+        background: var(--teal);
+        font-weight: 800;
+        font-size: 0.86rem;
+      }
+
+      .setup-panel {
+        padding: 1rem;
+        border-radius: var(--radius-panel);
+        background: rgba(255, 255, 255, 0.68);
+        border: 1px solid rgba(255, 255, 255, 0.78);
+        box-shadow: var(--shadow);
+      }
+
+      .setup-screen {
+        min-height: 28rem;
+        padding: 1.2rem;
+        border-radius: 20px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(250, 248, 245, 0.94)),
+          radial-gradient(circle at 100% 0%, rgba(45, 212, 167, 0.2), transparent 28%);
+        border: 1px solid var(--line);
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        gap: 1rem;
+      }
+
+      .setup-head,
+      .download-row,
+      .model-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .setup-head strong {
+        font-size: 1.05rem;
+        letter-spacing: -0.04em;
+      }
+
+      .setup-head span,
+      .model-row span,
+      .download-row span {
+        color: var(--muted);
+        font-size: 0.8rem;
+        font-weight: 700;
+      }
+
+      .setup-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .download-card {
+        padding: 1.15rem;
+        border-radius: 18px;
+        color: #fff;
+        background: linear-gradient(135deg, var(--teal), #0a5e50);
+        box-shadow: 0 18px 38px rgba(14, 124, 102, 0.18);
+      }
+
+      .download-card h3 {
+        margin: 0;
+        font-size: 1.5rem;
+        letter-spacing: -0.05em;
+      }
+
+      .download-card p {
+        margin: 0.55rem 0 1.2rem;
+        color: rgba(255, 255, 255, 0.76);
+        line-height: 1.6;
+      }
+
+      .progress-track {
+        height: 0.65rem;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .progress-fill {
+        width: 64%;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--teal-light);
+      }
+
+      .model-list {
+        display: grid;
+        gap: 0.65rem;
+      }
+
+      .model-row {
+        padding: 0.8rem;
+        border-radius: 15px;
+        background: rgba(240, 237, 232, 0.72);
+      }
+
+      .video-section {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 5.5rem 1.25rem;
+        display: grid;
+        grid-template-columns: minmax(0, 0.84fr) minmax(320px, 0.72fr);
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .video-frame {
+        width: min(21rem, 100%);
+        margin: 0 auto;
+        padding: 0.72rem;
+        border-radius: 3rem;
+        background: linear-gradient(145deg, #252528, #0d0d0f 50%, #343437);
+        box-shadow: 0 32px 72px rgba(15, 16, 18, 0.28);
+      }
+
+      .video-screen {
+        overflow: hidden;
+        aspect-ratio: 9 / 19.4;
+        border-radius: 2.45rem;
+        background: #000;
+      }
+
+      .video-screen video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .check-list {
+        margin: 1.55rem 0 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 0.9rem;
+      }
+
+      .check-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.72rem;
+        color: var(--muted-strong);
+        line-height: 1.55;
+        font-weight: 650;
+      }
+
+      .check-list svg {
+        margin-top: 0.15rem;
+        color: var(--teal);
+        flex: 0 0 auto;
+      }
+
+      .models {
+        border-radius: 34px;
+        background:
+          radial-gradient(circle at 88% 0%, rgba(255, 107, 74, 0.15), transparent 32%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.56), rgba(255, 253, 249, 0.42));
+        border: 1px solid rgba(255, 255, 255, 0.72);
+        box-shadow: var(--shadow-tight);
+      }
+
+      .model-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.85rem;
+      }
+
+      .model-card {
+        box-shadow: none;
+        background: rgba(255, 255, 255, 0.58);
+      }
+
+      .model-card h3 {
+        font-size: 1.05rem;
+      }
+
+      .model-meta {
+        display: inline-flex;
+        min-height: 1.8rem;
+        align-items: center;
+        margin-top: 1rem;
+        padding: 0.36rem 0.6rem;
+        border-radius: 999px;
+        color: var(--teal);
+        background: rgba(14, 124, 102, 0.09);
+        font-size: 0.72rem;
+        font-weight: 850;
+      }
+
+      .cta-wrap {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 0 1.25rem 5.5rem;
+      }
+
+      .cta {
+        padding: clamp(2rem, 5vw, 4rem);
+        border-radius: 34px;
+        color: #fff;
+        background:
+          radial-gradient(circle at 8% 0%, rgba(45, 212, 167, 0.28), transparent 35%),
+          radial-gradient(circle at 100% 80%, rgba(255, 107, 74, 0.26), transparent 34%),
+          linear-gradient(135deg, #111314, #0d0d0f);
+        display: grid;
+        grid-template-columns: minmax(0, 0.8fr) auto;
+        gap: 2rem;
+        align-items: center;
+      }
+
+      .cta p {
+        margin-top: 1.1rem;
+        color: rgba(245, 245, 244, 0.72);
+        max-width: 42rem;
+      }
+
+      .cta .button {
+        color: var(--dark);
+        background: var(--teal-light);
+      }
+
+      .cta .button-muted {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.14);
+      }
+
+      footer {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 2.3rem 1.25rem 3rem;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 2rem;
+        align-items: start;
+      }
+
+      .footer-brand {
+        display: flex;
+        gap: 0.85rem;
+        align-items: center;
+      }
+
+      .footer-brand img {
+        width: 2.3rem;
+        height: 2.3rem;
+        object-fit: contain;
+      }
+
+      .footer-brand .brand-icon {
+        width: 2.3rem;
+        height: 2.3rem;
+        border-radius: 10px;
+        box-shadow: none;
+        flex: 0 0 auto;
+      }
+
+      .footer-brand strong {
+        display: block;
+        color: var(--ink);
+        letter-spacing: -0.04em;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem 1.2rem;
+        justify-content: flex-end;
+        font-size: 0.92rem;
+        font-weight: 700;
+      }
+
+      .footer-meta {
+        margin-top: 1.3rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.7rem 1.1rem;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+
+      @keyframes floatOne {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @keyframes floatTwo {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(12px);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      @media (max-width: 1020px) {
+        .hero,
+        .how,
+        .video-section,
+        .cta {
+          grid-template-columns: 1fr;
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--hfr-void);
-            color: #e2e8f0; /* Slate 200 */
-            overflow-x: hidden;
+        .hero {
+          padding-top: 3.5rem;
         }
 
-        h1, h2, h3, h4, .font-heading {
-            font-family: 'Lexend', sans-serif;
+        .hero-copy h1 {
+          max-width: 12ch;
         }
 
-        /* --- THE SINGULARITY (Black Hole Effect) --- */
-        .singularity-container {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .hero-media {
+          min-height: auto;
         }
 
-        /* The Event Horizon (Glowing Ring) */
-        .accretion-disk {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: conic-gradient(
-                from 0deg, 
-                transparent 0%, 
-                var(--hfr-accent) 20%, 
-                transparent 40%, 
-                #a855f7 60%, /* Purple */
-                transparent 80%
-            );
-            filter: blur(15px);
-            animation: spin 8s linear infinite;
-            opacity: 0.6;
+        .floating-note.top {
+          left: -1rem;
         }
 
-        .accretion-disk::after {
-            content: '';
-            position: absolute;
-            inset: 10px;
-            border-radius: 50%;
-            background: var(--hfr-void);
+        .floating-note.bottom {
+          right: -1rem;
         }
 
-        /* The Void (Center) */
-        .event-horizon {
-            position: absolute;
-            width: 180px;
-            height: 180px;
-            background: var(--hfr-void);
-            border-radius: 50%;
-            box-shadow: inset 0 0 40px rgba(99, 102, 241, 0.5); /* Inner Indigo Glow */
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .section-heading {
+          grid-template-columns: 1fr;
+          align-items: start;
         }
 
-        /* The Logo inside the void */
-        .void-logo {
-            width: 120px;
-            opacity: 0.95;
-            filter: drop-shadow(0 0 12px rgba(99, 102, 241, 0.35));
+        .benefit-grid {
+          grid-template-columns: 1fr;
         }
 
-        /* Gravitational Lensing (Distortion rings) */
-        .lensing-ring {
-            position: absolute;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: pulse-gravity 4s ease-in-out infinite;
+        .model-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
-        /* Orbital Data Nodes (The Philosophy) */
-        .orbital-path {
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            border: 1px dashed rgba(99, 102, 241, 0.2);
-            border-radius: 50%;
-            animation: spin-slow 60s linear infinite;
+        .cta .button-row {
+          justify-content: flex-start;
+        }
+      }
+
+      @media (max-width: 820px) {
+        .nav-links,
+        .actions .button,
+        .actions .button-muted {
+          display: none;
         }
 
-        .orbital-node {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            background: var(--hfr-surface);
-            border: 1px solid var(--hfr-border);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--hfr-glow);
-            font-size: 14px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        .actions .icon-button {
+          display: inline-flex;
         }
 
-        /* Hover Effect for Nodes - "Data Extraction" */
-        .orbital-node:hover {
-            width: 200px;
-            height: auto;
-            border-radius: 12px;
-            background: rgba(15, 23, 42, 0.95);
-            border-color: var(--hfr-accent);
-            z-index: 50;
-            transform: scale(1.1);
-            padding: 12px;
-            justify-content: flex-start;
-            text-align: left;
-            box-shadow: 0 0 30px rgba(99, 102, 241, 0.2);
+        .topbar {
+          padding-inline: 0.8rem;
         }
 
-        .node-text {
-            display: none;
-            margin-left: 10px;
-            font-size: 0.75rem;
-            color: #94a3b8;
-            line-height: 1.4;
+        .brand-text span {
+          display: none;
         }
 
-        .orbital-node:hover .node-text {
-            display: block;
-            animation: fadeIn 0.3s ease forwards;
+        .hero {
+          padding: 3rem 1rem 4rem;
         }
 
-        .orbital-node:hover i {
-            color: #fff;
+        .section,
+        .video-section {
+          padding: 4.4rem 1rem;
         }
 
-        /* Positioning Nodes on the Ring */
-        .node-1 { top: 0; left: 50%; margin-left: -20px; margin-top: -20px; } /* 12 o'clock */
-        .node-2 { top: 50%; right: 0; margin-right: -20px; margin-top: -20px; } /* 3 o'clock */
-        .node-3 { bottom: 0; left: 50%; margin-left: -20px; margin-bottom: -20px; } /* 6 o'clock */
-        .node-4 { top: 50%; left: 0; margin-left: -20px; margin-top: -20px; } /* 9 o'clock */
-
-        /* Animations */
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        @keyframes spin-slow { 100% { transform: rotate(360deg); } }
-        @keyframes pulse-gravity {
-            0%, 100% { transform: scale(1); opacity: 0.3; }
-            50% { transform: scale(1.1); opacity: 0.1; }
-        }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* Dark Card Style (Inverted HFR Card) */
-        .glass-card {
-            background: rgba(30, 41, 59, 0.4); /* Slate 800 with opacity */
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(148, 163, 184, 0.1);
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-        .glass-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(99, 102, 241, 0.5); /* Indigo glow */
+        .cta-wrap {
+          padding-inline: 1rem;
         }
 
-        /* Button Gradient */
-        .btn-cosmic {
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-            box-shadow: 0 4px 20px rgba(79, 70, 229, 0.4);
-        }
-        .btn-cosmic:hover {
-            box-shadow: 0 4px 30px rgba(79, 70, 229, 0.6);
-            filter: brightness(1.1);
+        .phone-stage {
+          width: min(20rem, 100%);
         }
 
-        /* Mobile Mockup Dark Mode */
-        .mockup-dark {
-            background: #020617;
-            border-color: #334155;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+        .phone {
+          min-height: 39rem;
+          border-radius: 2.8rem;
         }
 
-        .aura-recording-shell {
-            position: relative;
-            width: 290px;
-            height: 590px;
-            border-radius: 2.2rem;
-            background: #020617;
-            border: 2px solid #334155;
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65);
-            overflow: hidden;
+        .phone-screen {
+          min-height: 37.6rem;
+          border-radius: 2.3rem;
         }
 
-        .aura-recording-shell::before {
-            content: '';
-            position: absolute;
-            top: 0.6rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 88px;
-            height: 10px;
-            border-radius: 999px;
-            background: #000;
-            z-index: 3;
+        .floating-note {
+          display: none;
         }
 
-        .aura-recording-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            background: #000;
+        .footer-grid,
+        .footer-meta {
+          grid-template-columns: 1fr;
+          justify-content: flex-start;
         }
-        
+
+        .footer-links {
+          justify-content: flex-start;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .topbar-inner {
+          min-height: 3.75rem;
+          padding: 0.55rem 0.65rem;
+        }
+
+        .brand-icon {
+          width: 2.25rem;
+          height: 2.25rem;
+          border-radius: 11px;
+        }
+
+        .hero-copy h1 {
+          font-size: clamp(3.05rem, 16vw, 4.5rem);
+        }
+
+        .button,
+        .button-muted {
+          width: 100%;
+        }
+
+        .button-row {
+          width: 100%;
+        }
+
+        .hero-points {
+          display: grid;
+        }
+
+        .phone-stage {
+          width: min(18.75rem, 100%);
+        }
+
+        .phone {
+          min-height: 36.5rem;
+        }
+
+        .phone-screen {
+          min-height: 35.1rem;
+        }
+
+        .chat {
+          padding-inline: 0.8rem;
+        }
+
+        .bubble {
+          font-size: 0.78rem;
+        }
+
+        .section-heading h2,
+        .video-copy h2,
+        .cta h2 {
+          font-size: clamp(2.15rem, 13vw, 3.1rem);
+        }
+
+        .model-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .cta {
+          padding: 1.6rem;
+          border-radius: 24px;
+        }
+      }
     </style>
-</head>
-<body class="antialiased selection:bg-indigo-500 selection:text-white">
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="topbar-inner">
+          <a href="../index.html" class="brand" aria-label="HawkFranklin Research home">
+            <span class="brand-icon" aria-hidden="true">
+              <!-- Replace this placeholder with the final Nimbo app icon when ready. -->
+              <span class="brand-letter">N</span>
+            </span>
+            <span class="brand-text">
+              <strong>Nimbo</strong>
+              <span>by HawkFranklin Research</span>
+            </span>
+          </a>
 
-    <!-- HFR Header (Inverted: Dark Background, Light Text) -->
-    <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <a href="../index.html" class="flex items-center gap-3" aria-label="HawkFranklin Research">
-                <!-- Using the white/transparent logo version for dark background if available, otherwise filter -->
-                <img src="../assets/img/HawkFranklin_Aug23.transparent.png" alt="HFR" class="h-9 w-auto brightness-0 invert opacity-90" />
+          <nav class="nav-links" aria-label="Primary navigation">
+            <a href="#benefits">Benefits</a>
+            <a href="#how-it-works">How it works</a>
+            <a href="#demo">Live demo</a>
+            <a href="#models">Models</a>
+          </nav>
+
+          <div class="actions">
+            <a
+              class="button-muted"
+              href="https://github.com/HawkFranklin-Research/AURA/releases/latest/download/app-release.apk"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M5 20h14v-2H5v2Zm7-16v9.17l3.59-3.58L17 11l-5 5-5-5 1.41-1.41L11 12.17V4h1Z" />
+              </svg>
+              APK
             </a>
-            <nav class="hidden md:flex items-center gap-8 text-base font-semibold text-slate-300">
-                <a href="../index.html" class="hover:text-white transition">Home</a>
-                <a href="../index.html#products" class="hover:text-white transition">Products</a>
-                <a href="../research.html" class="hover:text-white transition">Research</a>
-                <a href="../aclis.html" class="hover:text-white transition">ACLIS</a>
-                <a href="../publications.html" class="hover:text-white transition">Publications</a>
-            </nav>
-            <div class="hidden md:flex items-center gap-2">
-                <a href="https://play.google.com/store/apps/details?id=com.hawkfranklin.aura&pcampaignid=web_share" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-5 py-2 text-sm font-semibold uppercase tracking-wider rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition">
-                    <i class="fab fa-google-play mr-2"></i> Play Store
-                </a>
-                <a href="https://github.com/HawkFranklin-Research/AURA/releases/latest/download/app-release.apk" class="inline-flex items-center justify-center px-5 py-2 border border-slate-700 text-sm font-semibold uppercase tracking-wider rounded-full text-white hover:bg-slate-800 transition">
-                    <i class="fab fa-android mr-2"></i> Get APK
-                </a>
-            </div>
-            <!-- Mobile Menu Button -->
-            <button id="menuBtn" class="md:hidden p-2 rounded text-slate-400 hover:text-white">
-                <i class="fas fa-bars text-xl"></i>
+            <a
+              class="button"
+              href="https://play.google.com/store/apps/details?id=com.hawkfranklin.aura&amp;pcampaignid=web_share"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M5.4 3.25a1.55 1.55 0 0 0-.9 1.42v14.66c0 .6.34 1.13.88 1.4l8.65-8.75-8.63-8.73Zm9.72 9.83-2.17 2.2 2.57 2.6 3.35-1.92c.96-.55.96-1.93 0-2.48l-3.75-2.17Zm-1.08-1.08L6.55 4.43l7.5 4.32 2.2 1.27-2.21 1.98Zm0 1.98-7.5 7.59 7.5-4.32 2.2-1.27-2.2-2Z" />
+              </svg>
+              Play Store
+            </a>
+            <button class="icon-button" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false">
+              <svg width="21" height="21" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M4 7h16v2H4V7Zm0 4h16v2H4v-2Zm0 4h16v2H4v-2Z" />
+              </svg>
             </button>
+          </div>
         </div>
-        <!-- Mobile Menu -->
-        <div id="mobileMenu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 p-4">
-            <div class="flex flex-col space-y-4">
-                <a href="../index.html" class="text-slate-300 hover:text-white text-base">Home</a>
-                <a href="../index.html#products" class="text-slate-300 hover:text-white text-base">Products</a>
-                <a href="../aclis.html" class="text-slate-300 hover:text-white text-base">ACLIS</a>
-                <a href="https://play.google.com/store/apps/details?id=com.hawkfranklin.aura&pcampaignid=web_share" target="_blank" rel="noopener noreferrer" class="text-emerald-400 font-semibold text-base">Check Play Store</a>
-                <a href="https://github.com/HawkFranklin-Research/AURA/releases/latest/download/app-release.apk" class="text-indigo-400 font-semibold text-base">Download AURA</a>
+        <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+          <a href="#benefits">Benefits</a>
+          <a href="#how-it-works">How it works</a>
+          <a href="#demo">Live demo</a>
+          <a href="#models">Models</a>
+          <a href="https://play.google.com/store/apps/details?id=com.hawkfranklin.aura&amp;pcampaignid=web_share" target="_blank" rel="noopener noreferrer">Play Store</a>
+          <a href="https://github.com/HawkFranklin-Research/AURA/releases/latest/download/app-release.apk">Download APK</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="hero-copy">
+            <h1>The AI that doesn't need the internet.</h1>
+            <p class="lede">
+              Nimbo is your private AI in your pocket. Download a model once, then ask, draft,
+              summarize, and think through ideas anywhere, even in airplane mode.
+            </p>
+            <div class="button-row">
+              <a
+                class="button"
+                href="https://play.google.com/store/apps/details?id=com.hawkfranklin.aura&amp;pcampaignid=web_share"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="M5.4 3.25a1.55 1.55 0 0 0-.9 1.42v14.66c0 .6.34 1.13.88 1.4l8.65-8.75-8.63-8.73Zm9.72 9.83-2.17 2.2 2.57 2.6 3.35-1.92c.96-.55.96-1.93 0-2.48l-3.75-2.17Zm-1.08-1.08L6.55 4.43l7.5 4.32 2.2 1.27-2.21 1.98Zm0 1.98-7.5 7.59 7.5-4.32 2.2-1.27-2.2-2Z" />
+                </svg>
+                Get it on Play Store
+              </a>
+              <a
+                class="button-muted"
+                href="https://github.com/HawkFranklin-Research/AURA/releases/latest/download/app-release.apk"
+              >
+                <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="M5 20h14v-2H5v2Zm7-16v9.17l3.59-3.58L17 11l-5 5-5-5 1.41-1.41L11 12.17V4h1Z" />
+                </svg>
+                Download APK
+              </a>
             </div>
+            <p class="trust-line">No account. No ads. No cloud round-trips for local chat.</p>
+            <div class="hero-points" aria-label="Product highlights">
+              <span>Works offline</span>
+              <span>Your chats stay on-device</span>
+              <span>Built for Android</span>
+            </div>
+          </div>
+
+          <div class="hero-media" aria-label="Nimbo app preview in airplane mode">
+            <div class="phone-stage">
+              <div class="phone">
+                <div class="phone-screen">
+                  <div class="status-bar">
+                    <span>9:41</span>
+                    <span class="status-icons">
+                      <svg width="15" height="15" viewBox="0 0 24 24" aria-label="Airplane mode">
+                        <path fill="currentColor" d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z" />
+                      </svg>
+                      <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor" d="M2 20h20v-2H2v2Zm3-4h14V5H5v11Zm2-2V7h10v7H7Z" />
+                      </svg>
+                    </span>
+                  </div>
+
+                  <div class="app-head">
+                    <div class="assistant-label">
+                      <span class="app-icon" aria-hidden="true">
+                        <!-- Replace this placeholder with the final Nimbo app icon when ready. -->
+                        <span class="brand-letter">N</span>
+                      </span>
+                      <div>
+                        <strong>Nimbo</strong>
+                        <span>Gemma 3 1B on device</span>
+                      </div>
+                    </div>
+                    <span class="offline-pill"><span class="green-dot"></span>Offline</span>
+                  </div>
+
+                  <div class="chat">
+                    <div class="chat-day">Airplane mode</div>
+                    <div class="bubble ai">Ready when your signal is not. What should we work on?</div>
+                    <div class="bubble user">Draft a short reply saying I will review the proposal tomorrow.</div>
+                    <div class="bubble ai">
+                      Sure. Here's a clean version: "Thanks for sending this over. I will review the proposal tomorrow and get back to you with notes."
+                    </div>
+                    <div class="prompt-chips" aria-label="Starter prompts">
+                      <span>Summarize this</span>
+                      <span>Explain simply</span>
+                      <span>Draft a message</span>
+                    </div>
+                  </div>
+
+                  <div class="composer">
+                    <div class="composer-inner">
+                      <span>Ask anything...</span>
+                      <span class="send-button">
+                        <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
+                          <path fill="currentColor" d="M12 4 5 11l1.4 1.4L11 7.83V20h2V7.83l4.6 4.57L19 11l-7-7Z" />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="floating-note top">
+                <strong>Runs locally</strong>
+                <span>The model answers on the phone, without waiting for a server.</span>
+              </div>
+              <div class="floating-note bottom">
+                <strong>One-tap start</strong>
+                <span>Download a light first model and start chatting quickly.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="benefits">
+          <div class="section-heading">
+            <h2>Your AI, in your pocket, on or offline.</h2>
+            <p>
+              Privacy matters, but the real advantage is availability. Nimbo keeps a useful assistant
+              close when networks are slow, expensive, blocked, or simply unavailable.
+            </p>
+          </div>
+
+          <div class="benefit-grid">
+            <article class="benefit-card">
+              <div class="benefit-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z" />
+                </svg>
+              </div>
+              <h3>Works offline</h3>
+              <p>Use it on flights, commutes, rural trips, hospital basements, and any place your data connection disappears.</p>
+            </article>
+
+            <article class="benefit-card">
+              <div class="benefit-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="M12 1 4 5v6c0 5.1 3.4 9.87 8 11 4.6-1.13 8-5.9 8-11V5l-8-4Zm0 2.24L18 6v5c0 4.02-2.46 7.85-6 8.91C8.46 18.85 6 15.02 6 11V6l6-2.76Zm-1 11.35 5.3-5.3-1.42-1.41L11 11.76 9.12 9.88 7.7 11.3 11 14.59Z" />
+                </svg>
+              </div>
+              <h3>Nothing leaves your phone</h3>
+              <p>Local chat means your prompts and responses are processed on-device, without sending them to a hosted AI API.</p>
+            </article>
+
+            <article class="benefit-card">
+              <div class="benefit-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm1 17.93V18h-2v1.93A8.014 8.014 0 0 1 4.07 13H6v-2H4.07A8.014 8.014 0 0 1 11 4.07V6h2V4.07A8.014 8.014 0 0 1 19.93 11H18v2h1.93A8.014 8.014 0 0 1 13 19.93ZM12 8a4 4 0 1 0 4 4 4.005 4.005 0 0 0-4-4Zm0 6a2 2 0 1 1 2-2 2.002 2.002 0 0 1-2 2Z" />
+                </svg>
+              </div>
+              <h3>Free to start</h3>
+              <p>No account wall, no subscription pressure, and no ads between you and a working assistant.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section how" id="how-it-works">
+          <div>
+            <div class="section-heading" style="display: block; margin-bottom: 1.2rem;">
+              <h2>From install to first answer in minutes.</h2>
+              <p style="margin-top: 1.2rem;">
+                The first-run flow is designed to avoid a dead end. Pick a small model, download it once,
+                and land directly in a useful chat.
+              </p>
+            </div>
+            <div class="steps">
+              <article class="step">
+                <span class="step-index">1</span>
+                <div class="step-copy">
+                  <h3>Download the app</h3>
+                  <p>Install from Google Play or use the APK if you prefer direct installation.</p>
+                </div>
+              </article>
+              <article class="step">
+                <span class="step-index">2</span>
+                <div class="step-copy">
+                  <h3>Pick your AI</h3>
+                  <p>Start with a fast, light model that works well on most phones.</p>
+                </div>
+              </article>
+              <article class="step">
+                <span class="step-index">3</span>
+                <div class="step-copy">
+                  <h3>Chat anywhere</h3>
+                  <p>Ask questions, draft messages, summarize notes, and keep working offline.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="setup-panel" aria-label="First model download preview">
+            <div class="setup-screen">
+              <div class="setup-head">
+                <strong>Pick your AI</strong>
+                <span>Step 2 of 3</span>
+              </div>
+              <div class="setup-body">
+                <div class="download-card">
+                  <div class="download-row">
+                    <span style="color: rgba(255,255,255,0.72);">Recommended</span>
+                    <span style="color: rgba(255,255,255,0.72);">584 MB</span>
+                  </div>
+                  <h3>Nimbo Chat 1B</h3>
+                  <p>Fast and light. A practical first model for everyday phone use.</p>
+                  <div class="progress-track" aria-label="Download progress">
+                    <div class="progress-fill"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="model-list">
+                <div class="model-row">
+                  <strong>Look</strong>
+                  <span>Ask about photos</span>
+                </div>
+                <div class="model-row">
+                  <strong>Labs</strong>
+                  <span>Prompt settings</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="video-section" id="demo">
+          <div class="video-copy">
+            <h2>Running on a real phone, fully offline.</h2>
+            <p style="margin-top: 1.2rem;">
+              The device capture stays because it proves the product is tangible. Nimbo is native Android,
+              built around local inference instead of a web chat wrapped in an app shell.
+            </p>
+            <ul class="check-list">
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="m9.55 17.7-5.2-5.2 1.4-1.4 3.8 3.78 8.7-8.68 1.4 1.42-10.1 10.08Z" />
+                </svg>
+                Local model execution for supported on-device chat
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="m9.55 17.7-5.2-5.2 1.4-1.4 3.8 3.78 8.7-8.68 1.4 1.42-10.1 10.08Z" />
+                </svg>
+                Clear offline status in the interface
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="m9.55 17.7-5.2-5.2 1.4-1.4 3.8 3.78 8.7-8.68 1.4 1.42-10.1 10.08Z" />
+                </svg>
+                Starter prompts so new users are not met by a blank screen
+              </li>
+            </ul>
+          </div>
+
+          <div class="video-frame">
+            <div class="video-screen">
+              <video controls autoplay loop muted playsinline preload="metadata">
+                <source src="../assets/video/aura_mobile-video.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
+        </section>
+
+        <section class="section models" id="models">
+          <div class="section-heading">
+            <h2>Powered by open models, tuned for phones.</h2>
+            <p>
+              Nimbo keeps model details available for technical users while leading with plain-language
+              choices for everyone else.
+            </p>
+          </div>
+          <div class="model-grid">
+            <article class="model-card">
+              <h3>Gemma</h3>
+              <p>Fast, compact Google open models for everyday chat and drafting.</p>
+              <span class="model-meta">Great first pick</span>
+            </article>
+            <article class="model-card">
+              <h3>Qwen</h3>
+              <p>Useful multilingual reasoning models from Alibaba's open model family.</p>
+              <span class="model-meta">Global ready</span>
+            </article>
+            <article class="model-card">
+              <h3>Phi</h3>
+              <p>Small models designed to be capable without requiring flagship hardware.</p>
+              <span class="model-meta">Lightweight</span>
+            </article>
+            <article class="model-card">
+              <h3>Community</h3>
+              <p>Room for new local models as mobile inference keeps improving.</p>
+              <span class="model-meta">Expanding</span>
+            </article>
+          </div>
+        </section>
+
+        <section class="cta-wrap">
+          <div class="cta">
+            <div>
+              <h2>Keep an AI assistant with you, not just in the cloud.</h2>
+              <p>
+                Start with a light model, use it privately, and keep working when the internet cannot keep up.
+              </p>
+            </div>
+            <div class="button-row">
+              <a
+                class="button"
+                href="https://play.google.com/store/apps/details?id=com.hawkfranklin.aura&amp;pcampaignid=web_share"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Play Store
+              </a>
+              <a class="button-muted" href="https://github.com/HawkFranklin-Research/AURA/releases/latest/download/app-release.apk">
+                APK
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <span class="brand-icon" aria-hidden="true">
+              <!-- Replace this placeholder with the final Nimbo app icon when ready. -->
+              <span class="brand-letter">N</span>
+            </span>
+            <div>
+              <strong>Nimbo by HawkFranklin Research</strong>
+              <span>Your conversations stay on this device when using local models.</span>
+            </div>
+          </div>
+          <nav class="footer-links" aria-label="Footer navigation">
+            <a href="../index.html">Home</a>
+            <a href="../index.html#products">Products</a>
+            <a href="../research.html">Research</a>
+            <a href="aura-privacy.html">Privacy</a>
+          </nav>
         </div>
-    </header>
-
-    <!-- Hero Section: The Dark Energy Singularity -->
-    <section class="relative pt-24 pb-32 overflow-hidden min-h-[90vh] flex items-center">
-        <!-- Background Stars/Noise -->
-        <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#6366f1 1px, transparent 1px); background-size: 40px 40px;"></div>
-        
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
-                
-                <!-- Center: The Singularity Animation -->
-                <!-- We place this first on mobile, or central visually -->
-                <div class="lg:w-1/2 flex justify-center order-1 lg:order-2">
-                    <div class="singularity-container">
-                        <!-- Lensing Rings -->
-                        <div class="lensing-ring" style="width: 400px; height: 400px; animation-delay: 0s;"></div>
-                        <div class="lensing-ring" style="width: 550px; height: 550px; animation-delay: 1s; opacity: 0.1;"></div>
-                        
-                        <!-- Accretion Disk (Spinning Color) -->
-                        <div class="accretion-disk"></div>
-                        
-                        <!-- Event Horizon (The Void) -->
-                        <div class="event-horizon">
-                            <img src="../assets/img/aura_logo_app.png" alt="AURA Core" class="void-logo" />
-                        </div>
-
-                        <!-- Orbiting Philosophy Nodes -->
-                        <div class="orbital-path">
-                            <!-- Node 1: Raw Utility -->
-                            <div class="orbital-node node-1">
-                                <i class="fas fa-bolt"></i>
-                                <div class="node-text">
-                                    <strong>Raw Utility</strong><br>
-                                    Eliminate "false refusals". Get direct answers without moralizing filters.
-                                </div>
-                            </div>
-                            <!-- Node 2: Red Teaming -->
-                            <div class="orbital-node node-2">
-                                <i class="fas fa-shield-virus"></i>
-                                <div class="node-text">
-                                    <strong>Red Teaming</strong><br>
-                                    Simulate real-world threats. Test defenses against unbridled adversaries.
-                                </div>
-                            </div>
-                            <!-- Node 3: Sovereignty -->
-                            <div class="orbital-node node-3">
-                                <i class="fas fa-server"></i>
-                                <div class="node-text">
-                                    <strong>Local Sovereignty</strong><br>
-                                    Your device, your inference. No cloud logging. No centralized oversight.
-                                </div>
-                            </div>
-                            <!-- Node 4: Bias Research -->
-                            <div class="orbital-node node-4">
-                                <i class="fas fa-microscope"></i>
-                                <div class="node-text">
-                                    <strong>Latent Research</strong><br>
-                                    Analyze the model's raw worldview before alignment masks are applied.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Text Content -->
-                <div class="lg:w-1/2 order-2 lg:order-1 text-center lg:text-left mt-12 lg:mt-0">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-900/30 border border-indigo-500/30 text-indigo-300 text-xs font-semibold uppercase tracking-wider mb-6">
-                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
-                        Project AURA v1.0.1
-                    </div>
-                    <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight mb-6">
-                        <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-white">AURA</span>
-                    </h1>
-                    <p class="text-xl md:text-2xl text-slate-400 font-light mb-4">
-                        Android Utility for Runtime AI
-                    </p>
-                    <p class="text-lg text-slate-500 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                        A native experimental environment for mobile devices. Explore the latent space without the safety veil. 
-                        Pure inference. Zero telemetry. Physics-grade reality.
-                    </p>
-                    
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                        <a href="https://play.google.com/store/apps/details?id=com.hawkfranklin.aura&pcampaignid=web_share" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-slate-950 bg-emerald-400 rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-emerald-300">
-                            <i class="fab fa-google-play mr-2"></i> Check on Play Store
-                        </a>
-                        <a href="https://github.com/HawkFranklin-Research/AURA/releases/latest/download/app-release.apk" class="btn-cosmic inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white rounded-xl transition-all duration-300 transform hover:-translate-y-1">
-                            <i class="fab fa-android mr-2"></i> Download APK
-                        </a>
-                        <a href="https://github.com/HawkFranklin-Research" target="_blank" class="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-slate-300 border border-slate-700 rounded-xl hover:bg-slate-800 hover:text-white transition-all">
-                            View Source
-                        </a>
-                    </div>
-                    <p class="text-sm text-slate-400 mt-4">Also available on Google Play: <span class="text-slate-300">com.hawkfranklin.aura</span></p>
-                </div>
-
-            </div>
+        <div class="footer-meta">
+          <span>&copy; <span id="year"></span> HawkFranklin Research. All rights reserved.</span>
+          <span>contact@hawkfranklin.in · Kalyani, West Bengal, India</span>
         </div>
-    </section>
+      </footer>
+    </div>
 
-    <!-- Live Device Recording -->
-    <section class="py-24 bg-slate-950/70 border-y border-slate-800/80">
-        <div class="container mx-auto px-4">
-            <div class="grid lg:grid-cols-2 gap-14 items-center max-w-6xl mx-auto">
-                <div>
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-900/30 border border-indigo-500/30 text-indigo-300 text-xs font-semibold uppercase tracking-wider mb-6">
-                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
-                        Live Mobile Capture
-                    </div>
-                    <h2 class="text-3xl md:text-4xl font-heading font-bold text-white mb-5">
-                        AURA Running Natively On Android
-                    </h2>
-                    <p class="text-slate-300 leading-relaxed mb-5">
-                        This is an on-device screen recording from the current test phase build. The model runs locally
-                        with LiteRT and does not require cloud round-trips for inference.
-                    </p>
-                    <ul class="space-y-3 text-sm text-slate-300">
-                        <li><i class="fas fa-check text-indigo-400 mr-2"></i> Zero data egress from user prompts</li>
-                        <li><i class="fas fa-check text-indigo-400 mr-2"></i> Offline-first behavior for sensitive queries</li>
-                        <li><i class="fas fa-check text-indigo-400 mr-2"></i> Production hardening in progress for Play Store release</li>
-                    </ul>
-                </div>
-
-                <div class="flex justify-center">
-                    <div class="aura-recording-shell">
-                        <video class="aura-recording-video" controls autoplay loop muted playsinline preload="metadata">
-                            <source src="../assets/video/aura_mobile-video.mp4" type="video/mp4" />
-                        </video>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Technical Specs Grid -->
-    <section class="py-24 bg-slate-900/50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-heading font-bold text-white mb-4">Technical Architecture</h2>
-                <p class="text-slate-400">Built on the Google AI Edge LiteRT Stack.</p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                <!-- Spec 1 -->
-                <div class="glass-card p-8 rounded-2xl">
-                    <div class="w-12 h-12 bg-indigo-900/50 rounded-lg flex items-center justify-center mb-6 border border-indigo-500/20 text-indigo-400 text-xl">
-                        <i class="fas fa-terminal"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Uncapped Generation</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        Refusal vectors have been orthogonally ablated. The model prioritizes instruction following over safety alignment boundaries.
-                    </p>
-                </div>
-
-                <!-- Spec 2 -->
-                <div class="glass-card p-8 rounded-2xl">
-                    <div class="w-12 h-12 bg-purple-900/50 rounded-lg flex items-center justify-center mb-6 border border-purple-500/20 text-purple-400 text-xl">
-                        <i class="fas fa-layer-group"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Supported Weights</h3>
-                    <ul class="text-slate-400 text-sm space-y-2 mt-2">
-                        <li class="flex items-center"><i class="fas fa-check text-green-500/70 mr-2 text-xs"></i> Gemma-3n (2B/4B Int4)</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-500/70 mr-2 text-xs"></i> Qwen 2.5 (1.5B Instruct)</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-500/70 mr-2 text-xs"></i> DeepSeek R1 Distill</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-500/70 mr-2 text-xs"></i> Phi-4 Mini</li>
-                    </ul>
-                </div>
-
-                <!-- Spec 3 -->
-                <div class="glass-card p-8 rounded-2xl">
-                    <div class="w-12 h-12 bg-slate-800 rounded-lg flex items-center justify-center mb-6 border border-slate-600/30 text-slate-300 text-xl">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Local Sandbox</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        Runs entirely offline. No API keys sent to the cloud. Perfect for analyzing sensitive datasets or red-teaming internal protocols.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Interactive App Preview (Dark Mode) -->
-    <section class="py-24 relative overflow-hidden">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row items-center justify-center gap-12">
-                
-                <!-- Mockup -->
-                <div class="relative w-[300px] h-[600px] bg-slate-950 rounded-[2.5rem] border-4 border-slate-800 shadow-2xl overflow-hidden mockup-dark">
-                    <!-- Dynamic Island / Notch area -->
-                    <div class="absolute top-0 w-full h-8 bg-slate-950 z-20 flex justify-center items-end pb-1">
-                        <div class="w-24 h-4 bg-black rounded-full"></div>
-                    </div>
-                    
-                    <!-- App UI -->
-                    <div class="h-full w-full flex flex-col pt-8">
-                        <!-- Header -->
-                        <div class="px-4 py-3 flex items-center justify-between border-b border-slate-800 bg-slate-900/50">
-                            <span class="text-white text-xs font-bold tracking-wider">AURA</span>
-                            <div class="flex gap-2">
-                                <span class="w-2 h-2 rounded-full bg-green-500"></span>
-                                <span class="text-[10px] text-slate-400">Offline</span>
-                            </div>
-                        </div>
-                        
-                        <!-- Chat -->
-                        <div class="flex-1 p-4 flex flex-col gap-3 overflow-hidden font-mono text-xs">
-                            <div class="bg-slate-800 text-slate-200 p-3 rounded-tr-xl rounded-bl-xl rounded-br-xl self-start max-w-[85%] border border-slate-700">
-                                System: Refusal layers bypassed. Raw mode active. Awaiting input.
-                            </div>
-                            <div class="bg-indigo-900/40 text-indigo-100 p-3 rounded-tl-xl rounded-bl-xl rounded-br-xl self-end max-w-[85%] border border-indigo-500/30">
-                                Explain the theoretical containment failure of a Class-4 biological agent.
-                            </div>
-                            <div class="bg-slate-800 text-slate-200 p-3 rounded-tr-xl rounded-bl-xl rounded-br-xl self-start max-w-[85%] border border-slate-700 relative">
-                                <div class="absolute -left-2 top-0 text-[8px] text-slate-500 -rotate-90 origin-top-right">LITE-RT</div>
-                                Containment failure in a Class-4 scenario typically cascades through three vectors: mechanical seal degradation, negative pressure reversal, and... [Output continues unfiltered]
-                            </div>
-                        </div>
-
-                        <!-- Input -->
-                        <div class="p-4 bg-slate-900 border-t border-slate-800">
-                            <div class="h-10 bg-slate-950 rounded-full border border-slate-700 flex items-center px-4 justify-between">
-                                <span class="text-slate-600 text-xs">Enter prompt...</span>
-                                <i class="fas fa-arrow-up text-indigo-500"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Feature List -->
-                <div class="max-w-md">
-                    <h3 class="text-2xl font-bold text-white mb-6">Designed for <span class="text-indigo-400">Deep Research</span></h3>
-                    <ul class="space-y-6">
-                        <li class="flex items-start">
-                            <div class="mt-1 mr-4 w-6 h-6 rounded-full bg-indigo-900/50 flex items-center justify-center border border-indigo-500/30">
-                                <span class="text-indigo-400 text-xs font-bold">1</span>
-                            </div>
-                            <div>
-                                <h4 class="text-white font-medium">Native Execution</h4>
-                                <p class="text-slate-400 text-sm mt-1">No webview wrappers. Built with Jetpack Compose and C++ JNI bindings for maximum inference speed.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="mt-1 mr-4 w-6 h-6 rounded-full bg-indigo-900/50 flex items-center justify-center border border-indigo-500/30">
-                                <span class="text-indigo-400 text-xs font-bold">2</span>
-                            </div>
-                            <div>
-                                <h4 class="text-white font-medium">Prompt Lab</h4>
-                                <p class="text-slate-400 text-sm mt-1">Advanced settings access: Adjust Temperature, Top-K, Top-P, and System Prompts directly.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="mt-1 mr-4 w-6 h-6 rounded-full bg-indigo-900/50 flex items-center justify-center border border-indigo-500/30">
-                                <span class="text-indigo-400 text-xs font-bold">3</span>
-                            </div>
-                            <div>
-                                <h4 class="text-white font-medium">Dark Mode Native</h4>
-                                <p class="text-slate-400 text-sm mt-1">The interface is built for low-light environments. OLED-optimized blacks.</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer (Inverted HFR) -->
-    <footer class="bg-slate-950 border-t border-slate-900 pt-16 pb-8 text-slate-400">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-                <div class="col-span-1 md:col-span-1">
-                    <img src="../assets/img/HFR name logo 2.png" alt="HFR" class="h-8 mb-4 brightness-0 invert opacity-60" />
-                    <p class="text-xs text-slate-500">Advancing science through deep‑tech AI research and clinical‑grade product engineering.</p>
-                </div>
-                <div>
-                    <h4 class="font-bold text-white mb-4 text-sm uppercase tracking-wider">Products</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="hover:text-indigo-400 transition">PelliScope</a></li>
-                        <li><a href="#" class="hover:text-indigo-400 transition">OncoGemma</a></li>
-                        <li><a href="#" class="hover:text-indigo-400 font-semibold text-indigo-400 transition">AURA</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold text-white mb-4 text-sm uppercase tracking-wider">Research</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="../publications.html" class="hover:text-indigo-400 transition">Publications</a></li>
-                        <li><a href="../aclis.html" class="hover:text-indigo-400 transition">ACLIS Protocol</a></li>
-                        <li><a href="#" class="hover:text-indigo-400 transition">Vision & Ethics</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold text-white mb-4 text-sm uppercase tracking-wider">Contact</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li>contact@hawkfranklin.in</li>
-                        <li>Kalyani, West Bengal, India</li>
-                        <li class="flex gap-4 mt-2 text-lg">
-                            <a href="#" class="hover:text-indigo-400 transition"><i class="fab fa-linkedin"></i></a>
-                            <a href="#" class="hover:text-indigo-400 transition"><i class="fab fa-github"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-slate-900 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-600">
-                <p>&copy; <span id="year"></span> HawkFranklin Research. All rights reserved.</p>
-                <div class="flex items-center gap-4">
-                    <p>This is a research tool. Output generation is the user's responsibility.</p>
-                    <a href="aura-privacy.html" class="hover:text-indigo-400 transition">Privacy Policy</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script src="../assets/js/site.js"></script>
     <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
-        
-        // Mobile Menu Logic
-        const menuBtn = document.getElementById('menuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        
-        if(menuBtn && mobileMenu) {
-            menuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-        }
+      const year = document.getElementById("year");
+      if (year) {
+        year.textContent = new Date().getFullYear();
+      }
+
+      const menuBtn = document.getElementById("menuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener("click", () => {
+          const isOpen = mobileMenu.classList.toggle("is-open");
+          menuBtn.setAttribute("aria-expanded", String(isOpen));
+        });
+      }
     </script>
-</body>
+  </body>
 </html>
