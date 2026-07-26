@@ -1,13 +1,4 @@
 User-agent: *
-Disallow: /downloads/aura/
-Disallow: /aclis_old.html
-Disallow: /aclis_slide_change_usp.html
-Disallow: /derma-ai-brochure.html
-Disallow: /derma-ai-brochure_v2.html
-Disallow: /derma-ai-brochure_v3.html
-Disallow: /gab2.html
-Disallow: /research_current.html
-Disallow: /template.html
-Disallow: /products/ml_copilot_agent.backup.html
+Allow: /
 
 Sitemap: https://hawkfranklin.in/sitemap.xml
