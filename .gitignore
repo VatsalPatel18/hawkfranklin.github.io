@@ -10,3 +10,4 @@ fdroid/config.yml
 downloads/aura/*.apk
 fdroid/repo/*.apk
 conference/arab_health_26/20260210_104956.mp4
+dist/
