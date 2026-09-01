@@ -22,7 +22,7 @@ const indexablePages = [
   'vision.html',
   'products/pelliscope.html',
   'products/dermai-ehs-kiosk.html',
-  'products/aura2.html',
+  'products/aura.html',
   'products/oncogemma.html',
   'products/omics_copilot.html',
   'products/graph_attention_multiomics.html',

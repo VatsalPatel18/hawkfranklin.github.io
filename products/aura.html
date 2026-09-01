@@ -1,0 +1,1626 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AURA | The AI that doesn't need the internet</title>
+    <link rel="canonical" href="https://hawkfranklin.in/products/aura.html" />
+    <link rel="icon" type="image/png" href="../assets/img/aura_app_icon.png" />
+    <meta
+      name="description"
+      content="AURA is a private Android AI assistant that works on or offline. Download a model once, then chat anywhere with no account, no ads, and no cloud round-trips."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #fbf7f0;
+        --bg-warm: #f2eadd;
+        --ink: #1c1917;
+        --muted: #78716c;
+        --muted-strong: #57534e;
+        --surface: #ffffff;
+        --surface-soft: #f3ebdd;
+        --line: rgba(28, 25, 23, 0.11);
+        --line-strong: rgba(28, 25, 23, 0.18);
+        --teal: #c2410c;
+        --teal-light: #f59e0b;
+        --coral: #1e3a5f;
+        --coral-soft: #dce4ed;
+        --dark: #1a1614;
+        --dark-panel: #28221e;
+        --cream: #fffdf9;
+        --shadow: 0 28px 70px rgba(42, 35, 26, 0.13);
+        --shadow-tight: 0 18px 44px rgba(20, 21, 24, 0.1);
+        --radius-card: 14px;
+        --radius-panel: 24px;
+        --max: 1200px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 12% 0%, rgba(245, 158, 11, 0.16), transparent 28%),
+          radial-gradient(circle at 88% 8%, rgba(30, 58, 95, 0.12), transparent 28%),
+          linear-gradient(180deg, #fffdf9 0%, var(--bg) 44%, var(--bg-warm) 100%);
+        overflow-x: hidden;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img,
+      video,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      .page-shell {
+        min-height: 100vh;
+        position: relative;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        padding: 1rem 1.25rem 0;
+      }
+
+      .topbar-inner {
+        max-width: var(--max);
+        margin: 0 auto;
+        min-height: 4.25rem;
+        padding: 0.7rem 0.9rem 0.7rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.78);
+        border-radius: 999px;
+        background: rgba(255, 253, 249, 0.72);
+        box-shadow: 0 18px 50px rgba(43, 35, 24, 0.08);
+        backdrop-filter: blur(22px);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        min-width: 0;
+      }
+
+      .brand-icon,
+      .app-icon {
+        width: 2.55rem;
+        height: 2.55rem;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        border-radius: 13px;
+        background: transparent;
+        color: #fff;
+        box-shadow: 0 12px 24px rgba(194, 65, 12, 0.22);
+      }
+
+      .brand-icon img,
+      .app-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .brand-text strong {
+        display: block;
+        font-size: 1rem;
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+      }
+
+      .brand-text span {
+        display: block;
+        margin-top: 0.18rem;
+        color: var(--muted);
+        font-size: 0.74rem;
+        font-weight: 600;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 1.35rem;
+        color: rgba(28, 25, 23, 0.68);
+        font-size: 0.92rem;
+        font-weight: 700;
+      }
+
+      .nav-links a {
+        position: relative;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -0.38rem;
+        width: 100%;
+        height: 1px;
+        background: var(--teal);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 180ms ease;
+      }
+
+      .nav-links a:hover::after,
+      .nav-links a:focus-visible::after {
+        transform: scaleX(1);
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+      }
+
+      .button,
+      .button-muted,
+      .icon-button {
+        min-height: 2.9rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        cursor: pointer;
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease,
+          border-color 180ms ease,
+          background 180ms ease;
+      }
+
+      .button,
+      .button-muted {
+        gap: 0.55rem;
+        padding: 0.82rem 1.1rem;
+        border-radius: 999px;
+        font-size: 0.92rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        white-space: nowrap;
+      }
+
+      .button {
+        color: #fff;
+        background: var(--teal);
+        box-shadow: 0 16px 34px rgba(194, 65, 12, 0.22);
+      }
+
+      .button:hover,
+      .button:focus-visible,
+      .button-muted:hover,
+      .button-muted:focus-visible,
+      .icon-button:hover,
+      .icon-button:focus-visible {
+        transform: translateY(-2px);
+      }
+
+      .button:hover,
+      .button:focus-visible {
+        background: #9a3412;
+      }
+
+      .button-muted {
+        color: var(--ink);
+        background: rgba(255, 255, 255, 0.58);
+        border: 1px solid var(--line);
+      }
+
+      .icon-button {
+        width: 2.9rem;
+        display: none;
+        border-radius: 999px;
+        color: var(--ink);
+        background: rgba(255, 255, 255, 0.64);
+        border: 1px solid var(--line);
+      }
+
+      .mobile-menu {
+        display: none;
+        max-width: var(--max);
+        margin: 0.6rem auto 0;
+        padding: 0.75rem;
+        border: 1px solid rgba(255, 255, 255, 0.72);
+        border-radius: 22px;
+        background: rgba(255, 253, 249, 0.92);
+        box-shadow: var(--shadow-tight);
+      }
+
+      .mobile-menu.is-open {
+        display: grid;
+      }
+
+      .mobile-menu a {
+        padding: 0.9rem 1rem;
+        border-radius: 14px;
+        color: var(--muted-strong);
+        font-weight: 800;
+      }
+
+      .mobile-menu a:hover,
+      .mobile-menu a:focus-visible {
+        background: var(--surface-soft);
+        color: var(--ink);
+      }
+
+      .hero {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 2.5rem 1.25rem 1.5rem;
+        display: grid;
+        grid-template-columns: minmax(0, 0.94fr) minmax(360px, 0.86fr);
+        gap: clamp(2.5rem, 6vw, 5.5rem);
+        align-items: center;
+      }
+
+      .hero-copy h1,
+      .section-heading h2,
+      .video-copy h2,
+      .cta h2 {
+        margin: 0;
+        font-family: "Fraunces", Georgia, serif;
+        font-weight: 650;
+        letter-spacing: -0.055em;
+        line-height: 0.96;
+      }
+
+      .hero-copy h1 {
+        max-width: 11.5ch;
+        font-size: clamp(3.5rem, 6.5vw, 6.35rem);
+      }
+
+      .hero-copy .lede {
+        max-width: 38rem;
+        margin: 1.45rem 0 0;
+        color: var(--muted-strong);
+        font-size: clamp(1.04rem, 1.8vw, 1.24rem);
+        line-height: 1.65;
+      }
+
+      .hero-copy .button-row {
+        margin-top: 2rem;
+      }
+
+      .button-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.85rem;
+        align-items: center;
+      }
+
+      .trust-line {
+        margin: 1.2rem 0 0;
+        color: rgba(194, 65, 12, 0.96);
+        font-size: 0.93rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+
+      .hero-points {
+        max-width: 42rem;
+        margin: 1.5rem 0 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem 1.2rem;
+        color: rgba(28, 25, 23, 0.7);
+        font-size: 0.95rem;
+        font-weight: 650;
+      }
+
+      .hero-points span {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .hero-points span::before {
+        content: "";
+        width: 0.45rem;
+        height: 0.45rem;
+        border-radius: 999px;
+        background: var(--coral);
+      }
+
+      .hero-media {
+        position: relative;
+        min-height: 38rem;
+        display: grid;
+        place-items: center;
+      }
+
+      .phone-stage {
+        position: relative;
+        width: min(23.25rem, 100%);
+        isolation: isolate;
+      }
+
+      .phone-stage::before {
+        content: "";
+        position: absolute;
+        inset: 5% -10% 8%;
+        z-index: -1;
+        border-radius: 999px;
+        background:
+          radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.24), transparent 44%),
+          radial-gradient(circle at 62% 24%, rgba(30, 58, 95, 0.18), transparent 32%);
+        filter: blur(24px);
+      }
+
+      .phone {
+        position: relative;
+        min-height: 38.6rem;
+        padding: 0.7rem;
+        border-radius: 3.2rem;
+        background: linear-gradient(145deg, #332b26, var(--dark) 48%, #42352e);
+        box-shadow: 0 42px 90px rgba(16, 17, 18, 0.34);
+      }
+
+      .phone::before {
+        content: "";
+        position: absolute;
+        top: 1rem;
+        left: 50%;
+        width: 7.5rem;
+        height: 1.6rem;
+        border-radius: 999px;
+        background: #050506;
+        transform: translateX(-50%);
+        z-index: 3;
+      }
+
+      .phone-screen {
+        min-height: 37.2rem;
+        overflow: hidden;
+        border-radius: 2.65rem;
+        background: var(--dark);
+        color: #f5f5f4;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .status-bar {
+        height: 3.1rem;
+        padding: 0.8rem 1.15rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: rgba(245, 245, 244, 0.92);
+        font-size: 0.78rem;
+        font-weight: 800;
+      }
+
+      .status-icons {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+      }
+
+      .app-head {
+        padding: 1rem 1.05rem 0.85rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        border-bottom: 1px solid rgba(245, 245, 244, 0.08);
+      }
+
+      .assistant-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.65rem;
+        min-width: 0;
+      }
+
+      .assistant-label .app-icon {
+        width: 2.45rem;
+        height: 2.45rem;
+        border-radius: 13px;
+        box-shadow: none;
+      }
+
+      .assistant-label strong {
+        display: block;
+        font-size: 0.98rem;
+        letter-spacing: -0.03em;
+      }
+
+      .assistant-label span,
+      .offline-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.38rem;
+        color: rgba(245, 245, 244, 0.62);
+        font-size: 0.72rem;
+        font-weight: 700;
+      }
+
+      .offline-pill {
+        min-height: 1.9rem;
+        padding: 0.35rem 0.65rem;
+        border: 1px solid rgba(245, 158, 11, 0.24);
+        border-radius: 999px;
+        color: var(--teal-light);
+        background: rgba(245, 158, 11, 0.08);
+        white-space: nowrap;
+      }
+
+      .green-dot {
+        width: 0.48rem;
+        height: 0.48rem;
+        border-radius: 999px;
+        background: var(--teal-light);
+        box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1);
+      }
+
+      .chat {
+        flex: 1;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.78rem;
+      }
+
+      .chat-day {
+        align-self: center;
+        margin: 0.2rem 0 0.3rem;
+        color: rgba(245, 245, 244, 0.45);
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .bubble {
+        max-width: 86%;
+        padding: 0.82rem 0.92rem;
+        border-radius: 1.1rem;
+        font-size: 0.84rem;
+        line-height: 1.55;
+      }
+
+      .bubble.user {
+        align-self: flex-end;
+        border-bottom-right-radius: 0.32rem;
+        background: var(--teal);
+        color: #fff;
+      }
+
+      .bubble.ai {
+        align-self: flex-start;
+        border-bottom-left-radius: 0.32rem;
+        background: var(--dark-panel);
+        color: rgba(245, 245, 244, 0.88);
+        border: 1px solid rgba(245, 245, 244, 0.07);
+      }
+
+      .prompt-chips {
+        margin-top: auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .prompt-chips span {
+        min-height: 2rem;
+        display: inline-flex;
+        align-items: center;
+        padding: 0.4rem 0.65rem;
+        border-radius: 999px;
+        color: rgba(245, 245, 244, 0.72);
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        font-size: 0.72rem;
+        font-weight: 700;
+      }
+
+      .composer {
+        padding: 0.85rem;
+        border-top: 1px solid rgba(245, 245, 244, 0.08);
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .composer-inner {
+        min-height: 3.05rem;
+        padding: 0.45rem 0.45rem 0.45rem 0.95rem;
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        background: #111114;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .composer-inner span {
+        color: rgba(245, 245, 244, 0.46);
+        font-size: 0.82rem;
+      }
+
+      .send-button {
+        width: 2.15rem;
+        height: 2.15rem;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        color: var(--dark);
+        background: var(--teal-light);
+      }
+
+      .floating-note {
+        position: absolute;
+        max-width: 13.5rem;
+        padding: 0.95rem 1rem;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.78);
+        border: 1px solid rgba(255, 255, 255, 0.72);
+        box-shadow: var(--shadow-tight);
+        backdrop-filter: blur(18px);
+      }
+
+      .floating-note strong {
+        display: block;
+        font-size: 0.92rem;
+        letter-spacing: -0.03em;
+      }
+
+      .floating-note span {
+        display: block;
+        margin-top: 0.38rem;
+        color: var(--muted);
+        font-size: 0.78rem;
+        line-height: 1.5;
+      }
+
+      .floating-note.top {
+        left: -4rem;
+        top: 4.8rem;
+        animation: floatOne 7s ease-in-out infinite;
+      }
+
+      .floating-note.bottom {
+        right: -4.2rem;
+        bottom: 6.7rem;
+        animation: floatTwo 7.5s ease-in-out infinite;
+      }
+
+      .section {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 5.5rem 1.25rem;
+      }
+
+      .section-heading {
+        display: grid;
+        grid-template-columns: minmax(0, 0.8fr) minmax(280px, 0.62fr);
+        gap: 2rem;
+        align-items: end;
+        margin-bottom: 2.2rem;
+      }
+
+      .section-heading h2,
+      .video-copy h2,
+      .cta h2 {
+        font-size: clamp(2.35rem, 4vw, 4.35rem);
+      }
+
+      .section-heading p,
+      .video-copy p,
+      .cta p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.02rem;
+        line-height: 1.6;
+      }
+
+      .benefit-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .benefit-card,
+      .model-card {
+        padding: 1.4rem;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-card);
+        background: rgba(255, 255, 255, 0.72);
+        box-shadow: 0 20px 52px rgba(47, 38, 28, 0.07);
+      }
+
+      .benefit-icon {
+        width: 2.65rem;
+        height: 2.65rem;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        color: var(--teal);
+        background: rgba(194, 65, 12, 0.1);
+      }
+
+      .benefit-card:nth-child(2) .benefit-icon {
+        color: var(--coral);
+        background: var(--coral-soft);
+      }
+
+      .benefit-card h3,
+      .model-card h3,
+      .step-copy h3 {
+        margin: 1rem 0 0.45rem;
+        font-size: 1.35rem;
+        letter-spacing: -0.045em;
+      }
+
+      .benefit-card p,
+      .model-card p,
+      .step-copy p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .how {
+        display: grid;
+        grid-template-columns: minmax(0, 0.72fr) minmax(340px, 0.8fr);
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .steps {
+        display: grid;
+        gap: 0;
+      }
+
+      .step {
+        display: grid;
+        grid-template-columns: 3.2rem minmax(0, 1fr);
+        gap: 1rem;
+        padding: 1.45rem 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .step:last-child {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .step-index {
+        width: 2.3rem;
+        height: 2.3rem;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        color: #fff;
+        background: var(--teal);
+        font-weight: 800;
+        font-size: 0.86rem;
+      }
+
+      .setup-panel {
+        padding: 1rem;
+        border-radius: var(--radius-panel);
+        background: rgba(255, 255, 255, 0.68);
+        border: 1px solid rgba(255, 255, 255, 0.78);
+        box-shadow: var(--shadow);
+      }
+
+      .setup-screen {
+        min-height: 28rem;
+        padding: 1.2rem;
+        border-radius: 20px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(250, 248, 245, 0.94)),
+          radial-gradient(circle at 100% 0%, rgba(245, 158, 11, 0.18), transparent 28%);
+        border: 1px solid var(--line);
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        gap: 1rem;
+      }
+
+      .setup-head,
+      .download-row,
+      .model-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .setup-head strong {
+        font-size: 1.05rem;
+        letter-spacing: -0.04em;
+      }
+
+      .setup-head span,
+      .model-row span,
+      .download-row span {
+        color: var(--muted);
+        font-size: 0.8rem;
+        font-weight: 700;
+      }
+
+      .setup-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .download-card {
+        padding: 1.15rem;
+        border-radius: 18px;
+        color: #fff;
+        background: linear-gradient(135deg, var(--teal), #9a3412);
+        box-shadow: 0 18px 38px rgba(194, 65, 12, 0.18);
+      }
+
+      .download-card h3 {
+        margin: 0;
+        font-size: 1.5rem;
+        letter-spacing: -0.05em;
+      }
+
+      .download-card p {
+        margin: 0.55rem 0 1.2rem;
+        color: rgba(255, 255, 255, 0.76);
+        line-height: 1.6;
+      }
+
+      .progress-track {
+        height: 0.65rem;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .progress-fill {
+        width: 64%;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--teal-light);
+      }
+
+      .model-list {
+        display: grid;
+        gap: 0.65rem;
+      }
+
+      .model-row {
+        padding: 0.8rem;
+        border-radius: 15px;
+        background: rgba(240, 237, 232, 0.72);
+      }
+
+      .video-section {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 5.5rem 1.25rem;
+        display: grid;
+        grid-template-columns: minmax(0, 0.84fr) minmax(320px, 0.72fr);
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .video-frame {
+        width: min(21rem, 100%);
+        margin: 0 auto;
+        padding: 0.72rem;
+        border-radius: 3rem;
+        background: linear-gradient(145deg, #332b26, var(--dark) 50%, #42352e);
+        box-shadow: 0 32px 72px rgba(15, 16, 18, 0.28);
+      }
+
+      .video-screen {
+        overflow: hidden;
+        aspect-ratio: 9 / 19.4;
+        border-radius: 2.45rem;
+        background: #000;
+      }
+
+      .video-screen video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .check-list {
+        margin: 1.55rem 0 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 0.9rem;
+      }
+
+      .check-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.72rem;
+        color: var(--muted-strong);
+        line-height: 1.55;
+        font-weight: 650;
+      }
+
+      .check-list svg {
+        margin-top: 0.15rem;
+        color: var(--teal);
+        flex: 0 0 auto;
+      }
+
+      .models {
+        border-radius: 34px;
+        background:
+          radial-gradient(circle at 88% 0%, rgba(30, 58, 95, 0.1), transparent 32%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.56), rgba(255, 253, 249, 0.42));
+        border: 1px solid rgba(255, 255, 255, 0.72);
+        box-shadow: var(--shadow-tight);
+      }
+
+      .model-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.85rem;
+      }
+
+      .model-card {
+        box-shadow: none;
+        background: rgba(255, 255, 255, 0.58);
+      }
+
+      .model-card h3 {
+        font-size: 1.05rem;
+      }
+
+      .model-meta {
+        display: inline-flex;
+        min-height: 1.8rem;
+        align-items: center;
+        margin-top: 1rem;
+        padding: 0.36rem 0.6rem;
+        border-radius: 999px;
+        color: var(--teal);
+        background: rgba(194, 65, 12, 0.1);
+        font-size: 0.72rem;
+        font-weight: 850;
+      }
+
+      .cta-wrap {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 0 1.25rem 5.5rem;
+      }
+
+      .cta {
+        padding: clamp(2rem, 5vw, 4rem);
+        border-radius: 34px;
+        color: #fff;
+        background:
+          radial-gradient(circle at 8% 0%, rgba(245, 158, 11, 0.28), transparent 35%),
+          radial-gradient(circle at 100% 80%, rgba(30, 58, 95, 0.28), transparent 34%),
+          linear-gradient(135deg, #211915, var(--dark));
+        display: grid;
+        grid-template-columns: minmax(0, 0.8fr) auto;
+        gap: 2rem;
+        align-items: center;
+      }
+
+      .cta p {
+        margin-top: 1.1rem;
+        color: rgba(245, 245, 244, 0.72);
+        max-width: 42rem;
+      }
+
+      .cta .button {
+        color: var(--dark);
+        background: var(--teal-light);
+      }
+
+      .cta .button-muted {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.14);
+      }
+
+      footer {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 2.3rem 1.25rem 3rem;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 2rem;
+        align-items: start;
+      }
+
+      .footer-brand {
+        display: flex;
+        gap: 0.85rem;
+        align-items: center;
+      }
+
+      .footer-brand img {
+        width: 2.3rem;
+        height: 2.3rem;
+        object-fit: contain;
+      }
+
+      .footer-brand .brand-icon {
+        width: 2.3rem;
+        height: 2.3rem;
+        border-radius: 10px;
+        box-shadow: none;
+        flex: 0 0 auto;
+      }
+
+      .footer-brand strong {
+        display: block;
+        color: var(--ink);
+        letter-spacing: -0.04em;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem 1.2rem;
+        justify-content: flex-end;
+        font-size: 0.92rem;
+        font-weight: 700;
+      }
+
+      .footer-meta {
+        margin-top: 1.3rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.7rem 1.1rem;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+
+      @keyframes floatOne {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @keyframes floatTwo {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(12px);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      @media (max-width: 1020px) {
+        .hero,
+        .how,
+        .video-section,
+        .cta {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          padding-top: 3.5rem;
+        }
+
+        .hero-copy h1 {
+          max-width: 12ch;
+        }
+
+        .hero-media {
+          min-height: auto;
+        }
+
+        .floating-note.top {
+          left: -1rem;
+        }
+
+        .floating-note.bottom {
+          right: -1rem;
+        }
+
+        .section-heading {
+          grid-template-columns: 1fr;
+          align-items: start;
+        }
+
+        .benefit-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .model-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .cta .button-row {
+          justify-content: flex-start;
+        }
+      }
+
+      @media (max-width: 820px) {
+        .nav-links,
+        .actions .button,
+        .actions .button-muted {
+          display: none;
+        }
+
+        .actions .icon-button {
+          display: inline-flex;
+        }
+
+        .topbar {
+          padding-inline: 0.8rem;
+        }
+
+        .brand-text span {
+          display: none;
+        }
+
+        .hero {
+          padding: 3rem 1rem 4rem;
+        }
+
+        .section,
+        .video-section {
+          padding: 4.4rem 1rem;
+        }
+
+        .cta-wrap {
+          padding-inline: 1rem;
+        }
+
+        .phone-stage {
+          width: min(20rem, 100%);
+        }
+
+        .phone {
+          min-height: 39rem;
+          border-radius: 2.8rem;
+        }
+
+        .phone-screen {
+          min-height: 37.6rem;
+          border-radius: 2.3rem;
+        }
+
+        .floating-note {
+          display: none;
+        }
+
+        .footer-grid,
+        .footer-meta {
+          grid-template-columns: 1fr;
+          justify-content: flex-start;
+        }
+
+        .footer-links {
+          justify-content: flex-start;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .topbar-inner {
+          min-height: 3.75rem;
+          padding: 0.55rem 0.65rem;
+        }
+
+        .brand-icon {
+          width: 2.25rem;
+          height: 2.25rem;
+          border-radius: 11px;
+        }
+
+        .hero-copy h1 {
+          font-size: clamp(3.05rem, 16vw, 4.5rem);
+        }
+
+        .button,
+        .button-muted {
+          width: 100%;
+        }
+
+        .button-row {
+          width: 100%;
+        }
+
+        .hero-points {
+          display: grid;
+        }
+
+        .phone-stage {
+          width: min(18.75rem, 100%);
+        }
+
+        .phone {
+          min-height: 36.5rem;
+        }
+
+        .phone-screen {
+          min-height: 35.1rem;
+        }
+
+        .chat {
+          padding-inline: 0.8rem;
+        }
+
+        .bubble {
+          font-size: 0.78rem;
+        }
+
+        .section-heading h2,
+        .video-copy h2,
+        .cta h2 {
+          font-size: clamp(2.15rem, 13vw, 3.1rem);
+        }
+
+        .model-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .cta {
+          padding: 1.6rem;
+          border-radius: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="topbar-inner">
+          <a href="../" class="brand" aria-label="HawkFranklin Research home">
+            <span class="brand-icon" aria-hidden="true">
+              <img src="../assets/img/aura_app_icon.png" alt="" />
+            </span>
+            <span class="brand-text">
+              <strong>AURA</strong>
+              <span>by HawkFranklin Research</span>
+            </span>
+          </a>
+
+          <nav class="nav-links" aria-label="Primary navigation">
+            <a href="#benefits">Benefits</a>
+            <a href="#how-it-works">How it works</a>
+            <a href="#demo">Live demo</a>
+            <a href="#models">Models</a>
+          </nav>
+
+          <div class="actions">
+            <a
+              class="button-muted"
+              href="https://github.com/HawkFranklin-Research/AURA/releases/latest/download/app-release.apk"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M5 20h14v-2H5v2Zm7-16v9.17l3.59-3.58L17 11l-5 5-5-5 1.41-1.41L11 12.17V4h1Z" />
+              </svg>
+              APK
+            </a>
+            <a
+              class="button"
+              href="https://play.google.com/store/apps/details?id=com.hawkfranklin.aura&amp;pcampaignid=web_share"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M5.4 3.25a1.55 1.55 0 0 0-.9 1.42v14.66c0 .6.34 1.13.88 1.4l8.65-8.75-8.63-8.73Zm9.72 9.83-2.17 2.2 2.57 2.6 3.35-1.92c.96-.55.96-1.93 0-2.48l-3.75-2.17Zm-1.08-1.08L6.55 4.43l7.5 4.32 2.2 1.27-2.21 1.98Zm0 1.98-7.5 7.59 7.5-4.32 2.2-1.27-2.2-2Z" />
+              </svg>
+              Play Store
+            </a>
+            <button class="icon-button" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false">
+              <svg width="21" height="21" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M4 7h16v2H4V7Zm0 4h16v2H4v-2Zm0 4h16v2H4v-2Z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+          <a href="#benefits">Benefits</a>
+          <a href="#how-it-works">How it works</a>
+          <a href="#demo">Live demo</a>
+          <a href="#models">Models</a>
+          <a href="https://play.google.com/store/apps/details?id=com.hawkfranklin.aura&amp;pcampaignid=web_share" target="_blank" rel="noopener noreferrer">Play Store</a>
+          <a href="https://github.com/HawkFranklin-Research/AURA/releases/latest/download/app-release.apk">Download APK</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="hero-copy">
+            <h1>The AI that doesn't need the internet.</h1>
+            <p class="lede">
+              AURA is your private AI in your pocket. Download a model once, then ask, draft,
+              summarize, and think through ideas anywhere, even in airplane mode.
+            </p>
+            <div class="button-row">
+              <a
+                class="button"
+                href="https://play.google.com/store/apps/details?id=com.hawkfranklin.aura&amp;pcampaignid=web_share"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="M5.4 3.25a1.55 1.55 0 0 0-.9 1.42v14.66c0 .6.34 1.13.88 1.4l8.65-8.75-8.63-8.73Zm9.72 9.83-2.17 2.2 2.57 2.6 3.35-1.92c.96-.55.96-1.93 0-2.48l-3.75-2.17Zm-1.08-1.08L6.55 4.43l7.5 4.32 2.2 1.27-2.21 1.98Zm0 1.98-7.5 7.59 7.5-4.32 2.2-1.27-2.2-2Z" />
+                </svg>
+                Get it on Play Store
+              </a>
+              <a
+                class="button-muted"
+                href="https://github.com/HawkFranklin-Research/AURA/releases/latest/download/app-release.apk"
+              >
+                <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="M5 20h14v-2H5v2Zm7-16v9.17l3.59-3.58L17 11l-5 5-5-5 1.41-1.41L11 12.17V4h1Z" />
+                </svg>
+                Download APK
+              </a>
+            </div>
+            <p class="trust-line">No account. No ads. No cloud round-trips for local chat.</p>
+            <div class="hero-points" aria-label="Product highlights">
+              <span>Works offline</span>
+              <span>Your chats stay on-device</span>
+              <span>Built for Android</span>
+            </div>
+          </div>
+
+          <div class="hero-media" aria-label="AURA app preview in airplane mode">
+            <div class="phone-stage">
+              <div class="phone">
+                <div class="phone-screen">
+                  <div class="status-bar">
+                    <span>9:41</span>
+                    <span class="status-icons">
+                      <svg width="15" height="15" viewBox="0 0 24 24" aria-label="Airplane mode">
+                        <path fill="currentColor" d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z" />
+                      </svg>
+                      <svg width="18" height="18" viewBox="0 0 24 24" aria-label="Battery level">
+                        <path fill="currentColor" d="M3 7.5A2.5 2.5 0 0 1 5.5 5h12A2.5 2.5 0 0 1 20 7.5V9h1.25c.41 0 .75.34.75.75v4.5c0 .41-.34.75-.75.75H20v1.5a2.5 2.5 0 0 1-2.5 2.5h-12A2.5 2.5 0 0 1 3 16.5v-9Zm2.5-.5a.5.5 0 0 0-.5.5v9c0 .28.22.5.5.5h12a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-12Zm1.5 2h8.5v6H7V9Z" />
+                      </svg>
+                    </span>
+                  </div>
+
+                  <div class="app-head">
+                    <div class="assistant-label">
+                      <span class="app-icon" aria-hidden="true">
+                        <img src="../assets/img/aura_app_icon.png" alt="" />
+                      </span>
+                      <div>
+                        <strong>AURA</strong>
+                        <span>Gemma 3 1B on device</span>
+                      </div>
+                    </div>
+                    <span class="offline-pill"><span class="green-dot"></span>Offline</span>
+                  </div>
+
+                  <div class="chat">
+                    <div class="chat-day">Airplane mode</div>
+                    <div class="bubble ai">Ready when your signal is not. What should we work on?</div>
+                    <div class="bubble user">Draft a short reply saying I will review the proposal tomorrow.</div>
+                    <div class="bubble ai">
+                      Sure. Here's a clean version: "Thanks for sending this over. I will review the proposal tomorrow and get back to you with notes."
+                    </div>
+                    <div class="prompt-chips" aria-label="Starter prompts">
+                      <span>Summarize this</span>
+                      <span>Explain simply</span>
+                      <span>Draft a message</span>
+                    </div>
+                  </div>
+
+                  <div class="composer">
+                    <div class="composer-inner">
+                      <span>Ask anything...</span>
+                      <span class="send-button">
+                        <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
+                          <path fill="currentColor" d="M12 4 5 11l1.4 1.4L11 7.83V20h2V7.83l4.6 4.57L19 11l-7-7Z" />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="floating-note top">
+                <strong>Runs locally</strong>
+                <span>The model answers on the phone, without waiting for a server.</span>
+              </div>
+              <div class="floating-note bottom">
+                <strong>One-tap start</strong>
+                <span>Download a light first model and start chatting quickly.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="benefits">
+          <div class="section-heading">
+            <h2>Your AI, in your pocket, on or offline.</h2>
+            <p>
+              Privacy matters, but the real advantage is availability. AURA keeps a useful assistant
+              close when networks are slow, expensive, blocked, or simply unavailable.
+            </p>
+          </div>
+
+          <div class="benefit-grid">
+            <article class="benefit-card">
+              <div class="benefit-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z" />
+                </svg>
+              </div>
+              <h3>Works offline</h3>
+              <p>Use it on flights, commutes, rural trips, hospital basements, and any place your data connection disappears.</p>
+            </article>
+
+            <article class="benefit-card">
+              <div class="benefit-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="M12 1 4 5v6c0 5.1 3.4 9.87 8 11 4.6-1.13 8-5.9 8-11V5l-8-4Zm0 2.24L18 6v5c0 4.02-2.46 7.85-6 8.91C8.46 18.85 6 15.02 6 11V6l6-2.76Zm-1 11.35 5.3-5.3-1.42-1.41L11 11.76 9.12 9.88 7.7 11.3 11 14.59Z" />
+                </svg>
+              </div>
+              <h3>Nothing leaves your phone</h3>
+              <p>Local chat means your prompts and responses are processed on-device, without sending them to a hosted AI API.</p>
+            </article>
+
+            <article class="benefit-card">
+              <div class="benefit-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm1 17.93V18h-2v1.93A8.014 8.014 0 0 1 4.07 13H6v-2H4.07A8.014 8.014 0 0 1 11 4.07V6h2V4.07A8.014 8.014 0 0 1 19.93 11H18v2h1.93A8.014 8.014 0 0 1 13 19.93ZM12 8a4 4 0 1 0 4 4 4.005 4.005 0 0 0-4-4Zm0 6a2 2 0 1 1 2-2 2.002 2.002 0 0 1-2 2Z" />
+                </svg>
+              </div>
+              <h3>Free to start</h3>
+              <p>No account wall, no subscription pressure, and no ads between you and a working assistant.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section how" id="how-it-works">
+          <div>
+            <div class="section-heading" style="display: block; margin-bottom: 1.2rem;">
+              <h2>From install to first answer in minutes.</h2>
+              <p style="margin-top: 1.2rem;">
+                The first-run flow is designed to avoid a dead end. Pick a small model, download it once,
+                and land directly in a useful chat.
+              </p>
+            </div>
+            <div class="steps">
+              <article class="step">
+                <span class="step-index">1</span>
+                <div class="step-copy">
+                  <h3>Download the app</h3>
+                  <p>Install from Google Play or use the APK if you prefer direct installation.</p>
+                </div>
+              </article>
+              <article class="step">
+                <span class="step-index">2</span>
+                <div class="step-copy">
+                  <h3>Pick your AI</h3>
+                  <p>Start with a fast, light model that works well on most phones.</p>
+                </div>
+              </article>
+              <article class="step">
+                <span class="step-index">3</span>
+                <div class="step-copy">
+                  <h3>Chat anywhere</h3>
+                  <p>Ask questions, draft messages, summarize notes, and keep working offline.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="setup-panel" aria-label="First model download preview">
+            <div class="setup-screen">
+              <div class="setup-head">
+                <strong>Pick your AI</strong>
+                <span>Step 2 of 3</span>
+              </div>
+              <div class="setup-body">
+                <div class="download-card">
+                  <div class="download-row">
+                    <span style="color: rgba(255,255,255,0.72);">Recommended</span>
+                    <span style="color: rgba(255,255,255,0.72);">584 MB</span>
+                  </div>
+                  <h3>AURA Chat 1B</h3>
+                  <p>Fast and light. A practical first model for everyday phone use.</p>
+                  <div class="progress-track" aria-label="Download progress">
+                    <div class="progress-fill"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="model-list">
+                <div class="model-row">
+                  <strong>Look</strong>
+                  <span>Ask about photos</span>
+                </div>
+                <div class="model-row">
+                  <strong>Labs</strong>
+                  <span>Prompt settings</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="video-section" id="demo">
+          <div class="video-copy">
+            <h2>Running on a real phone, fully offline.</h2>
+            <p style="margin-top: 1.2rem;">
+              The device capture stays because it proves the product is tangible. AURA is native Android,
+              built around local inference instead of a web chat wrapped in an app shell.
+            </p>
+            <ul class="check-list">
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="m9.55 17.7-5.2-5.2 1.4-1.4 3.8 3.78 8.7-8.68 1.4 1.42-10.1 10.08Z" />
+                </svg>
+                Local model execution for supported on-device chat
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="m9.55 17.7-5.2-5.2 1.4-1.4 3.8 3.78 8.7-8.68 1.4 1.42-10.1 10.08Z" />
+                </svg>
+                Clear offline status in the interface
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="m9.55 17.7-5.2-5.2 1.4-1.4 3.8 3.78 8.7-8.68 1.4 1.42-10.1 10.08Z" />
+                </svg>
+                Starter prompts so new users are not met by a blank screen
+              </li>
+            </ul>
+          </div>
+
+          <div class="video-frame">
+            <div class="video-screen">
+              <video controls autoplay loop muted playsinline preload="metadata">
+                <source src="../assets/video/aura_mobile-video.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
+        </section>
+
+        <section class="section models" id="models">
+          <div class="section-heading">
+            <h2>Powered by open models, tuned for phones.</h2>
+            <p>
+              AURA keeps model details available for technical users while leading with plain-language
+              choices for everyone else.
+            </p>
+          </div>
+          <div class="model-grid">
+            <article class="model-card">
+              <h3>Gemma</h3>
+              <p>Fast, compact Google open models for everyday chat and drafting.</p>
+              <span class="model-meta">Great first pick</span>
+            </article>
+            <article class="model-card">
+              <h3>Qwen</h3>
+              <p>Useful multilingual reasoning models from Alibaba's open model family.</p>
+              <span class="model-meta">Global ready</span>
+            </article>
+            <article class="model-card">
+              <h3>Phi</h3>
+              <p>Small models designed to be capable without requiring flagship hardware.</p>
+              <span class="model-meta">Lightweight</span>
+            </article>
+            <article class="model-card">
+              <h3>Community</h3>
+              <p>Room for new local models as mobile inference keeps improving.</p>
+              <span class="model-meta">Expanding</span>
+            </article>
+          </div>
+        </section>
+
+        <section class="cta-wrap">
+          <div class="cta">
+            <div>
+              <h2>Keep an AI assistant with you, not just in the cloud.</h2>
+              <p>
+                Start with a light model, use it privately, and keep working when the internet cannot keep up.
+              </p>
+            </div>
+            <div class="button-row">
+              <a
+                class="button"
+                href="https://play.google.com/store/apps/details?id=com.hawkfranklin.aura&amp;pcampaignid=web_share"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Play Store
+              </a>
+              <a class="button-muted" href="https://github.com/HawkFranklin-Research/AURA/releases/latest/download/app-release.apk">
+                APK
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <span class="brand-icon" aria-hidden="true">
+              <img src="../assets/img/aura_app_icon.png" alt="" />
+            </span>
+            <div>
+              <strong>AURA by HawkFranklin Research</strong>
+              <span>Your conversations stay on this device when using local models.</span>
+            </div>
+          </div>
+          <nav class="footer-links" aria-label="Footer navigation">
+            <a href="../">Home</a>
+            <a href="../#products">Products</a>
+            <a href="../research.html">Research</a>
+            <a href="aura-privacy.html">Privacy</a>
+          </nav>
+        </div>
+        <div class="footer-meta">
+          <span>&copy; <span id="year"></span> HawkFranklin Research. All rights reserved.</span>
+          <span>contact@hawkfranklin.in · Kalyani, West Bengal, India</span>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      const year = document.getElementById("year");
+      if (year) {
+        year.textContent = new Date().getFullYear();
+      }
+
+      const menuBtn = document.getElementById("menuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener("click", () => {
+          const isOpen = mobileMenu.classList.toggle("is-open");
+          menuBtn.setAttribute("aria-expanded", String(isOpen));
+        });
+      }
+    </script>
+  </body>
+</html>
